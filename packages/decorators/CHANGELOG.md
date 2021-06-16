@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2021-06-16)
+
+
+### Features
+
+* initial commit ([c79a88c](https://gitr.net/mindary/libit/commits/c79a88c56e4c98155d80e15cf0e83be24593af27))
+
+
+
+
+
 ## [0.2.8](https://gitr.net/mindary/libit/compare/@libit/decorators@0.2.6...@libit/decorators@0.2.8) (2021-03-03)
 
 **Note:** Version bump only for package @libit/decorators
