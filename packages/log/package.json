@@ -1,0 +1,48 @@
+{
+  "name": "@libit/log",
+  "description": "Lightweight level based logging system.",
+  "version": "0.2.13",
+  "keywords": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-log*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run build",
+    "test": "lb-mocha \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-log*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "@libit/translate": "^0.3.11",
+    "individual": "^3.0.0",
+    "orx": "^0.1.4",
+    "tily": "^2.7.1",
+    "ts-essentials": "^7.0.2",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/chalk": "^2.2.0",
+    "@types/node": "^15.12.2",
+    "@types/tmp": "^0.2.0",
+    "tmp": "^0.2.1"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ]
+}

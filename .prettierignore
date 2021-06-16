@@ -1,0 +1,8 @@
+.github/
+/coverage
+packages/*/dist
+examples/*/dist
+**/fixtures/
+CHANGELOG.md
+*.json
+*.yml

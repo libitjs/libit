@@ -1,0 +1,7 @@
+trace: 跟踪
+debug: 调试
+info: 信息
+log: 日志
+warn: 警告
+error: 错误
+fatal: 致命
