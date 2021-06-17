@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://gitr.net/mindary/libit/compare/@libit/log@0.4.1...@libit/log@0.4.2) (2021-06-17)
+
+**Note:** Version bump only for package @libit/log
+
+
+
+
+
 ## [0.4.1](https://gitr.net/mindary/libit/compare/@libit/log@0.4.0...@libit/log@0.4.1) (2021-06-17)
 
 **Note:** Version bump only for package @libit/log
