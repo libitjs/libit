@@ -1,7 +1,7 @@
 {
   "name": "@libit/bufio",
   "description": "Buffer and serialization utilities for javascript",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "keywords": [
     "buffer",
     "io",
