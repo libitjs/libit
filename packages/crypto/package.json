@@ -36,7 +36,8 @@
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/node": "^15.12.2",
-    "cpx2": "^3.0.0"
+    "cpx2": "^3.0.0",
+    "fs-extra": "^10.0.0"
   },
   "publishConfig": {
     "directory": "dist"
