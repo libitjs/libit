@@ -1,0 +1,50 @@
+{
+  "name": "@libit/pki",
+  "description": "A JavaScript library implementing the formats that are used in PKI applications.",
+  "version": "0.1.0",
+  "keywords": [
+    "pki",
+    "certificate",
+    "sign",
+    "validate"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "copyfixtures": "cpx \"./src/__tests__/fixtures/**/*\" \"./dist/__tests__/fixtures\"",
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "postbuild": "npm run copyfixtures",
+    "clean": "lb-clean libit-pki*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-pki*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "@libit/bufio": "^0.1.0",
+    "@libit/crypto": "^0.1.0",
+    "fast-glob": "^3.2.5",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@libit/bsert": "^0.1.0",
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.2",
+    "cpx2": "^3.0.0"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ]
+}

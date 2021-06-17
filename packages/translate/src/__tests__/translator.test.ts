@@ -3,7 +3,7 @@ import {getFixturePath} from './support';
 import {TranslateError} from '../errors';
 import {Translator} from '../types';
 import {createTranslator} from '../create-translator';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 describe('createTranslator()', () => {
   let t: Translator;
 

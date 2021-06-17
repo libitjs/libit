@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {detect} from './detect';
 import {readFile, readFileSync} from './common';
 import {Memory} from './stores';

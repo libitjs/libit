@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {OpenMode} from 'fs';
 
 export type TransformFn = (obj: {key: string; value: any}) => any;

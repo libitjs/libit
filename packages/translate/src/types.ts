@@ -1,6 +1,5 @@
 import {i18n, InterpolationOptions} from 'i18next';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Direction = 'ltr' | 'rtl';
 
 export type ResourceFormat = 'js' | 'json' | 'yaml';

@@ -1,0 +1,44 @@
+{
+  "name": "@libit/crypto",
+  "description": "The missing crypto module for Node.js. It provides you with a consistent interface across Node.js and the browser.",
+  "version": "0.1.0",
+  "keywords": [
+    "crypto",
+    "crypt",
+    "hash",
+    "sign",
+    "verify"
+  ],
+  "engines": {
+    "node": ">=10.16"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "version": "cross-env CI=1 node scripts/prerelease.js",
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "postbuild": "cpx \"./src/__tests__/data/**/*\" \"./dist/__tests__/data\"",
+    "clean": "lb-clean libit-crypto*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-crypto*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "@libit/bufio": "^0.1.0",
+    "bcrypto": "^5.4.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@libit/bsert": "^0.1.0",
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/node": "^15.12.2",
+    "cpx2": "^3.0.0"
+  },
+  "publishConfig": {
+    "directory": "dist"
+  }
+}

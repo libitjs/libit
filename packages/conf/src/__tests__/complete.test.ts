@@ -5,7 +5,6 @@
  *
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs-extra';
 import {expect} from '@loopback/testlab';
 import {cp, fixture} from './support';

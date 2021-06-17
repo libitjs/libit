@@ -5,13 +5,31 @@
   },
   "references": [
     {
+      "path": "packages/bsert/tsconfig.json"
+    },
+    {
+      "path": "packages/bufio/tsconfig.json"
+    },
+    {
       "path": "packages/conf/tsconfig.json"
+    },
+    {
+      "path": "packages/crypto/tsconfig.json"
     },
     {
       "path": "packages/decorators/tsconfig.json"
     },
     {
       "path": "packages/log/tsconfig.json"
+    },
+    {
+      "path": "packages/pki/tsconfig.json"
+    },
+    {
+      "path": "packages/sn-cli/tsconfig.json"
+    },
+    {
+      "path": "packages/sn/tsconfig.json"
     },
     {
       "path": "packages/translate/tsconfig.json"

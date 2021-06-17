@@ -25,7 +25,7 @@
   "dependencies": {
     "@libit/translate": "^0.4.0",
     "individual": "^3.0.0",
-    "orx": "^0.1.4",
+    "orx": "^0.1.5",
     "tily": "^2.7.1",
     "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0"
@@ -44,5 +44,6 @@
     "dist",
     "src",
     "!*/__tests__"
-  ]
+  ],
+  "gitHead": "cb1f07d108af2a1500fc11a26013558ee7eeec53"
 }

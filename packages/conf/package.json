@@ -48,7 +48,7 @@
     "np": "^7.5.0",
     "open-cli": "^7.0.0",
     "tmp": "^0.2.1",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.3"
   },
   "optionalDependencies": {
     "@iarna/toml": "^2.2.5",
@@ -61,5 +61,6 @@
     "dist",
     "src",
     "!*/__tests__"
-  ]
+  ],
+  "gitHead": "cb1f07d108af2a1500fc11a26013558ee7eeec53"
 }

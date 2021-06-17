@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from 'fs';
 import {FileReadOptions, TransformFn} from './types';
 import {RuntimeError} from './errors';

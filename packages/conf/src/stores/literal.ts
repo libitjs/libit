@@ -6,8 +6,6 @@
  *
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {Memory, MemoryOptions} from './memory';
 
 export interface LiteralOptions extends MemoryOptions {

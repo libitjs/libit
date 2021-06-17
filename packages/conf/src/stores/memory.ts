@@ -6,8 +6,6 @@
  *
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {loadFilesSync} from '../utils';
 import {decodeKey, keyed, parseValues} from '../common';
 import {AbstractStore} from '../store';

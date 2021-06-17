@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {PortablePath} from 'orx/path';
 import {FileTransport} from '../transports/file';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export function existsFile(path: PortablePath): boolean {
   return fs.existsSync(String(path));
 }

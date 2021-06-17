@@ -7,7 +7,7 @@ interface LogSettingsIndividual {
   transports?: Transportable[];
 }
 
-const individual: LogSettingsIndividual = require('individual')('$$loopx:log', {});
+const individual: LogSettingsIndividual = require('individual')('$$libit:log', {});
 
 class Settings {
   get transports(): Transportable[] {

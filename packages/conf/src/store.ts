@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {Codec} from './types';
 
 export type StoreOptions = Record<string, any>;

@@ -6,8 +6,6 @@ import {TranslateError} from './errors';
 import {FileBackend} from './file-backend';
 import {LocaleDetector} from './locale-detector';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 const debug = require('debug')('libit:translate:translator');
 
 export interface TranslatorOptions {

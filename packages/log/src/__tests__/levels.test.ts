@@ -1,6 +1,6 @@
 import {expect} from '@loopback/testlab';
 import {isLevelEnabled, LOG_LEVELS, LogLevelName} from '../levels';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 function assertLevelEnabled(threshold: LogLevelName, expected: Record<LogLevelName, boolean>) {
   for (const l of LOG_LEVELS) {
     expect(isLevelEnabled(l, threshold)).equal(expected[l], `${l} should be ${expected[l]}`);

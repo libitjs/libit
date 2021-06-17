@@ -10,7 +10,7 @@ import {Logger} from '../logger';
 import {ConsoleTransport} from '../transports/console';
 import {LOG_LEVELS, LogLevel, LogLevelName} from '../levels';
 import * as sys from '../sys';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 describe('Logger', () => {
   describe('threshold level priority', function () {
     it('should get from env', function () {

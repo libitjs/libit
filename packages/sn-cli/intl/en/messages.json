@@ -1,0 +1,9 @@
+{
+  "9387339d9c85776408fc2fae3aa3ec58": "Prefer to retrieve uuid on the first attempt",
+  "9fe454dc00c8a68774be7fbd3853acc0": "A string to be prefixed ahead of the shell command to be run",
+  "ab2f08e6befa6a0ed3d51cd610cf4491": "Slice the serial number to specified size",
+  "b3cb6bddb962fe436f58251e2f11d701": "Retrieve the hashed serial number",
+  "c9e5729e080bd0060b4585d776485973": "The custom cache file name",
+  "cca1505ac28b4b1ff7d4873921823272": "The custom current working directory",
+  "db2b07c36a96a2eadfd01c1dcc5b1571": "Retrieve the serial number of the local machine."
+}

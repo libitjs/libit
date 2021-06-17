@@ -6,8 +6,6 @@
  *
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {Argv as YArgv, Options as YOptions} from 'yargs';
 import {Memory, MemoryOptions} from './memory';
 import {encodeKey, parseValues, transform} from '../common';

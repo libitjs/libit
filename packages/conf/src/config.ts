@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import isEqual from 'tily/is/equal';
 import isPlainObject from 'tily/is/plainObject';
 import {Store, StoreOptions} from './store';
