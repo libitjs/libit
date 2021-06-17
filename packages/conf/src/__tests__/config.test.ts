@@ -47,7 +47,7 @@ describe('config When using config', () => {
   });
 
   it("respond with correct arg when 'env' is true and 'parseValues' option is true", () => {
-    const env: Record<string, string> = {
+    const env = {
       SOMETHING: 'foobar',
       SOMEBOOL: 'true',
       SOMENULL: 'null',
@@ -56,15 +56,17 @@ describe('config When using config', () => {
       SOMEFLOAT: '0.5',
       SOMEBAD: '5.1a',
     };
-    const oenv: Record<string, any> = {};
-    Object.keys(env).forEach(function (key) {
-      if (process.env[key]) oenv[key] = process.env[key];
-      process.env[key] = env[key];
+    type EnvKeys = keyof typeof env;
+    type EnvConfig = {[key in EnvKeys]: typeof env[key]};
+    const oenv: Partial<EnvConfig> = {};
+    Object.keys(env).forEach(key => {
+      if (process.env[key]) oenv[key as EnvKeys] = process.env[key];
+      process.env[key] = env[key as EnvKeys];
     });
-    const config = new Config().use('env', {parseValues: true});
+    const config = new Config<EnvConfig>().use('env', {parseValues: true});
     Object.keys(env).forEach(function (key) {
       delete process.env[key];
-      if (oenv[key]) process.env[key] = oenv[key];
+      if (oenv[key as EnvKeys]) process.env[key] = oenv[key as EnvKeys];
     });
 
     expect(config.get('SOMETHING')).eql('foobar');

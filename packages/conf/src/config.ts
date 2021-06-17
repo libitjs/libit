@@ -38,7 +38,7 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Config {
+export class Config<T extends Record<string, any>> {
   stores: Record<string, Store>;
   sources: Store[];
 
@@ -68,7 +68,7 @@ export class Config {
     return this.add(<string>key, {type: 'file', ...options});
   }
 
-  defaults(options: PossibleLiteralOptions = {}) {
+  defaults(options: PossibleLiteralOptions | Partial<T> = {}) {
     if (!options.store) {
       options = {store: options};
     }
@@ -76,7 +76,7 @@ export class Config {
     return this.add('defaults', options);
   }
 
-  overrides(options: PossibleLiteralOptions = {}) {
+  overrides(options: PossibleLiteralOptions | Partial<T> = {}) {
     if (!options.store) {
       options = {store: options};
     }
@@ -181,9 +181,9 @@ export class Config {
   create(type: 'file', options?: PossibleFileOptions): File;
   create(type: 'literal', options?: PossibleLiteralOptions): Literal;
   create(type: 'memory', options?: PossibleMemoryOptions): Memory;
-  create<T extends Store = Store>(type: string, options?: PossibleStoreOptions): T;
-  create<T extends Store = Store>(type: string, options?: any): T {
-    return <T>new Stores[type](options);
+  create<S extends Store = Store>(type: string, options?: PossibleStoreOptions): S;
+  create<S extends Store = Store>(type: string, options?: any): S {
+    return <S>new Stores[type](options);
   }
 
   //
@@ -198,7 +198,10 @@ export class Config {
     return this;
   }
 
-  get<T = any>(key?: string): T | undefined {
+  get(): T | undefined;
+  get<K extends keyof T>(key: K): T[K] | undefined;
+  get(key: string): any;
+  get(key?: string): any {
     //
     // Otherwise the asynchronous, hierarchical `get` is
     // slightly more complicated because we do not need to traverse
@@ -252,7 +255,8 @@ export class Config {
   // Sets the `value` for the specified `key` in this instance.
   //
 
-  set(obj: any): boolean | undefined;
+  set(obj: Partial<T>): boolean | undefined;
+  set<K extends keyof T>(key: K, value: T[K]): boolean | undefined;
   set(key: string, value: any): boolean | undefined;
   set(key: string | any, value?: any): boolean | undefined {
     return traverseSync(this.stores, store => {
@@ -329,10 +333,9 @@ export class Config {
 
   //
   // ### function load (callback)
-  // #### @callback {function} Continuation to respond to when complete.
   // Responds with an Object representing all keys associated in this instance.
   //
-  async load(): Promise<Record<string, any>> {
+  async load(): Promise<T> {
     if (this.sources.length) {
       const sourceHierarchy = this.sources.splice(0);
       sourceHierarchy.reverse();
@@ -347,7 +350,8 @@ export class Config {
     }
 
     const stores = Object.values(this.stores).reverse();
-    return merge(await Promise.all(stores.map(store => store.load())));
+    const objs = await Promise.all(stores.map(store => store.load()));
+    return merge(objs);
   }
 
   loadSync(): Record<string, any> {
@@ -368,7 +372,6 @@ export class Config {
 
   //
   // ### function save (callback)
-  // #### @callback {function} **optional**  Continuation to respond to when
   // complete.
   // Instructs each config to save.  If a callback is provided, we will attempt
   // asynchronous saves on the configs, falling back to synchronous saves if

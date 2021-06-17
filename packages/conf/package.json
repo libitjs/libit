@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "tily": "^2.7.1",
+    "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0",
     "yargs": "^17.0.1"
   },

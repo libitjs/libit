@@ -44,7 +44,7 @@ export function loadFilesSync(options: string | string[] | LoadOptions) {
 // Merges the specified `objs` using a temporary instance
 // of `stores.Memory`.
 //
-export function merge(objs: Record<string, any>[]) {
+export function merge(objs: any[]): any {
   const store = new Memory();
 
   for (const obj of objs) {
