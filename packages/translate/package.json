@@ -10,9 +10,6 @@
   },
   "author": "Mindary",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
     "build": "lb-tsc",
@@ -44,5 +41,7 @@
     "src",
     "!*/__tests__"
   ],
-  "gitHead": "cb1f07d108af2a1500fc11a26013558ee7eeec53"
+  "publishConfig": {
+    "access": "public"
+  }
 }
