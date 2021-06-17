@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.3.0](https://gitr.net/mindary/libit/compare/@libit/conf@0.2.0...@libit/conf@0.3.0) (2021-06-17)
+# 0.2.0 (2021-06-17)
 
 
 ### Features
@@ -14,9 +14,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# 0.2.0 (2021-06-16)
+# 0.2.0 (2021-06-17)
 
 
 ### Features
 
-* initial commit ([c79a88c](https://gitr.net/mindary/libit/commits/c79a88c56e4c98155d80e15cf0e83be24593af27))
+* add more modules ([ec8c35b](https://gitr.net/mindary/libit/commits/ec8c35b18b46fd894731b63383e766973070cc52))
