@@ -12,7 +12,9 @@
       "conventionalCommits": true,
       "message": "chore: publish release"
     },
-    "publish": {},
+    "publish": {
+      "registry": "https://registry.npmjs.com"
+    },
     "run": {
       "prefix": false,
       "loglevel": "silent",
