@@ -42,5 +42,6 @@
   "publishConfig": {
     "access": "public",
     "directory": "dist"
-  }
+  },
+  "gitHead": "603d81190a792aa0f5121e3f85bc5935711bbf3a"
 }
