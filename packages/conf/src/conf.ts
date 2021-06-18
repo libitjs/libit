@@ -48,6 +48,41 @@ export class Conf<T extends GenericConf = GenericConf> {
     this.init(options);
   }
 
+  //
+  // ### function init (options)
+  // #### @options {Object} Options to initialize this instance with.
+  // Initializes this instance with additional `stores` or `sources` in the
+  // `options` supplied.
+  //
+  protected init(options: Partial<ConfOptions> = {}) {
+    //
+    // Add any stores passed in through the options
+    // to this instance.
+    //
+    if (options.type) {
+      this.add(options.type, options);
+    } else if (options.store) {
+      this.add(options.store.type, options.store);
+    } else if (options.stores) {
+      for (const name of Object.keys(options.stores)) {
+        const store = options.stores[name];
+        this.add(name, store);
+      }
+    }
+
+    //
+    // Add any read-only sources to this instance
+    //
+    if (options.source) {
+      this.sources.push(this.create(options.source.type, options.source));
+    } else if (options.sources) {
+      for (const name of Object.keys(options.sources)) {
+        const source = options.sources[name];
+        this.sources.push(this.create(source.type || name, source));
+      }
+    }
+  }
+
   argv(options?: PossibleArgvOptions): this {
     return this.add('argv', options);
   }
@@ -82,41 +117,6 @@ export class Conf<T extends GenericConf = GenericConf> {
     }
     options = Object.assign({type: 'literal'}, options);
     return this.add('overrides', options);
-  }
-
-  //
-  // ### function init (options)
-  // #### @options {Object} Options to initialize this instance with.
-  // Initializes this instance with additional `stores` or `sources` in the
-  // `options` supplied.
-  //
-  init(options: Partial<ConfOptions> = {}) {
-    //
-    // Add any stores passed in through the options
-    // to this instance.
-    //
-    if (options.type) {
-      this.add(options.type, options);
-    } else if (options.store) {
-      this.add(options.store.type, options.store);
-    } else if (options.stores) {
-      for (const name of Object.keys(options.stores)) {
-        const store = options.stores[name];
-        this.add(name, store);
-      }
-    }
-
-    //
-    // Add any read-only sources to this instance
-    //
-    if (options.source) {
-      this.sources.push(this.create(options.source.type, options.source));
-    } else if (options.sources) {
-      for (const name of Object.keys(options.sources)) {
-        const source = options.sources[name];
-        this.sources.push(this.create(source.type || name, source));
-      }
-    }
   }
 
   //
@@ -198,10 +198,10 @@ export class Conf<T extends GenericConf = GenericConf> {
     return this;
   }
 
-  get(): T | undefined;
-  get<K extends keyof T>(key: K): T[K] | undefined;
-  get(key: string): any;
-  get(key?: string): any {
+  get(): T;
+  get<K extends keyof T>(key: K): T[K];
+  get<K extends keyof T>(key: K, defaultValue: Required<T>[K]): Required<T>[K];
+  get(key?: string, defaultValue?: unknown): unknown {
     //
     // Otherwise the asynchronous, hierarchical `get` is
     // slightly more complicated because we do not need to traverse
@@ -222,8 +222,12 @@ export class Conf<T extends GenericConf = GenericConf> {
     }
 
     if (objs.length) {
+      if (objs.length === 1) {
+        return objs[0];
+      }
       return <T>merge(objs.reverse());
     }
+    return defaultValue;
   }
 
   //
