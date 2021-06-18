@@ -15,7 +15,7 @@ import {
   PossibleMemoryOptions,
   Stores,
 } from './stores';
-import {Codec} from './types';
+import {Codec, GenericConf} from './types';
 import {merge, traverseSync} from './utils';
 
 export interface Source extends StoreOptions {
@@ -38,7 +38,7 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends Record<string, any>> {
+export class Conf<T extends GenericConf = GenericConf> {
   stores: Record<string, Store>;
   sources: Store[];
 
