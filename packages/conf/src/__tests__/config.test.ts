@@ -8,7 +8,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import {expect} from '@loopback/testlab';
-import {Config} from '../config';
+import {Conf} from '../conf';
 import {assertMerged, assertSystemConf, fixture} from './support';
 import {File} from '../stores';
 
@@ -22,7 +22,7 @@ describe('config When using config', () => {
     it(
       'calling #use() with the same store type and different options' + ' should use a new instance of the store type',
       () => {
-        const config = new Config().use('file', {file: files[0]});
+        const config = new Conf().use('file', {file: files[0]});
         const old = config.stores['file'];
 
         expect((config.stores.file as File).file).eql(files[0]);
@@ -63,7 +63,7 @@ describe('config When using config', () => {
       if (process.env[key]) oenv[key as EnvKeys] = process.env[key];
       process.env[key] = env[key as EnvKeys];
     });
-    const config = new Config<EnvConfig>().use('env', {parseValues: true});
+    const config = new Conf<EnvConfig>().use('env', {parseValues: true});
     Object.keys(env).forEach(function (key) {
       delete process.env[key];
       if (oenv[key as EnvKeys]) process.env[key] = oenv[key as EnvKeys];
@@ -120,14 +120,14 @@ describe('config When using config', () => {
 
   describe('#merge()', () => {
     it('should have the result merged in', async () => {
-      const config = new Config().use('file', {file: files[1]});
+      const config = new Conf().use('file', {file: files[1]});
       await config.load();
       config.merge(override);
       assertMerged(config.stores.file.store);
       expect(config.stores.file.store.candy.something).eql('file1');
     });
     it('should merge Objects over null', async () => {
-      const config = new Config().use('file', {file: files[1]});
+      const config = new Conf().use('file', {file: files[1]});
       await config.load();
       config.merge(override);
       expect(config.stores.file.store.unicorn.exists).eql(true);
@@ -135,7 +135,7 @@ describe('config When using config', () => {
   });
   describe('#load()', () => {
     it('should respect the hierarchy when sources are passed in', async () => {
-      const config = new Config({
+      const config = new Conf({
         sources: {
           user: {
             type: 'file',
@@ -153,7 +153,7 @@ describe('config When using config', () => {
     });
 
     it('should respect the hierarchy when source are passed in', async () => {
-      const config = new Config({
+      const config = new Conf({
         source: {
           type: 'file',
           file: files[0],
@@ -164,7 +164,7 @@ describe('config When using config', () => {
     });
 
     it('should respect the hierarchy when multiple stores are used', async () => {
-      const config = new Config()
+      const config = new Conf()
         .overrides({foo: {bar: 'baz'}})
         .add('file1', {type: 'file', file: files[0]})
         .add('file2', {type: 'file', file: files[1]});
@@ -178,7 +178,7 @@ describe('config When using config', () => {
   });
   describe('#loadSync()', () => {
     it('should respect the hierarchy when sources are passed in', () => {
-      const config = new Config({
+      const config = new Conf({
         sources: {
           user: {
             type: 'file',
@@ -198,17 +198,17 @@ describe('config When using config', () => {
 
   describe('#file()', () => {
     it('should use the correct File store with a single filepath', () => {
-      const config = new Config();
+      const config = new Conf();
       config.file(fixture('store.json'));
       expect(config.stores.file).type('object');
     });
     it('should use the correct File store with a name and a filepath', () => {
-      const config = new Config();
+      const config = new Conf();
       config.file('custom', fixture('store.json'));
       expect(config.stores.custom).type('object');
     });
     it('should use the correct File store with a single object', () => {
-      const config = new Config();
+      const config = new Conf();
       config.file({
         dir: fixture(''),
         file: 'store.json',
@@ -219,7 +219,7 @@ describe('config When using config', () => {
       expect((config.stores.file as File).file).eql(fixture('store.json'));
     });
     it('should use the correct File store with a name and an object', () => {
-      const config = new Config();
+      const config = new Conf();
       config.file('custom', {
         dir: fixture(''),
         file: 'store.json',
@@ -231,7 +231,7 @@ describe('config When using config', () => {
     });
   });
   describe('#any()', () => {
-    const config = new Config({
+    const config = new Conf({
       type: 'literal',
       store: {
         key: 'getThisValue',
@@ -262,7 +262,7 @@ describe('config When using config', () => {
   });
 
   describe('#required()', function () {
-    const config = new Config({
+    const config = new Conf({
       type: 'literal',
       store: {
         foo: 'bar',

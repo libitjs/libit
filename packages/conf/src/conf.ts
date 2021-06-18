@@ -22,7 +22,7 @@ export interface Source extends StoreOptions {
   type: string;
 }
 
-export interface ConfigOptions {
+export interface ConfOptions {
   type: string;
   store: StoreOptions;
   stores: Record<string, StoreOptions>;
@@ -38,11 +38,11 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Config<T extends Record<string, any>> {
+export class Conf<T extends Record<string, any>> {
   stores: Record<string, Store>;
   sources: Store[];
 
-  constructor(options: Partial<ConfigOptions> = {}) {
+  constructor(options: Partial<ConfOptions> = {}) {
     this.stores = {};
     this.sources = [];
     this.init(options);
@@ -90,7 +90,7 @@ export class Config<T extends Record<string, any>> {
   // Initializes this instance with additional `stores` or `sources` in the
   // `options` supplied.
   //
-  init(options: Partial<ConfigOptions> = {}) {
+  init(options: Partial<ConfOptions> = {}) {
     //
     // Add any stores passed in through the options
     // to this instance.
@@ -396,4 +396,4 @@ export class Config<T extends Record<string, any>> {
   }
 }
 
-export const conf = new Config();
+export const conf = new Conf();

@@ -8,7 +8,7 @@
 import fs from 'fs-extra';
 import {expect} from '@loopback/testlab';
 import {cp, fixture} from './support';
-import {Config} from '../config';
+import {Conf} from '../conf';
 
 const sample = require('./fixtures/data').data;
 
@@ -27,7 +27,7 @@ process.env.NESTED__VALUE = 'nested';
 process.env.NESTED___VALUE_EXTRA_LODASH = '_nested_';
 
 describe('config/multiple-stores', () => {
-  const config = new Config();
+  const config = new Conf();
 
   describe('When using the config with multiple providers', () => {
     before(() => {

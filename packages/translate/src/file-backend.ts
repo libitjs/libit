@@ -1,7 +1,7 @@
 import {BackendModule, Resource, ResourceKey} from 'i18next';
 import {Configurable} from 'orx/configurable';
 import {Path} from 'orx/path';
-import {Config} from '@libit/conf';
+import {Conf} from '@libit/conf';
 import {TranslateError} from './errors';
 import {Locale, ResourceFormat} from './types';
 
@@ -57,10 +57,7 @@ export class FileBackend extends Configurable<FileBackendOptions> implements Bac
         }
 
         if (!isCached) {
-          this.fileCache.set(
-            resPath,
-            ext === 'js' ? require(resPath.path()) : new Config().file(resPath.path()).get()!,
-          );
+          this.fileCache.set(resPath, ext === 'js' ? require(resPath.path()) : new Conf().file(resPath.path()).get()!);
         }
 
         Object.assign(resources, this.fileCache.get(resPath));

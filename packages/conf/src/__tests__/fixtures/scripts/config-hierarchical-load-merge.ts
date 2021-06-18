@@ -7,9 +7,9 @@
  */
 
 import path from 'path';
-import {Config} from '../../../config';
+import {Conf} from '../../../conf';
 
-const config = new Config();
+const config = new Conf();
 
 config.argv().file(path.join(__dirname, '..', 'merge', 'file1.json'));
 

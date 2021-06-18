@@ -5,10 +5,10 @@
  *
  */
 
-import {Config} from '../../../config';
+import {Conf} from '../../../conf';
 import {Argv} from '../../../stores';
 
-const config = new Config().argv();
+const config = new Conf().argv();
 
 //
 // Remove 'badValue', 'evenWorse' and 'OHNOEZ'

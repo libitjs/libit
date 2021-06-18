@@ -6,15 +6,15 @@
  */
 
 import path from 'path';
-import {Config} from '../../../config';
+import {Conf} from '../../../conf';
 
-const config = new Config();
+const config = new Conf();
 
 //
 // Setup config to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at 'path/to/config.json'
+//   3. A file located at 'path/to/conf.json'
 //
 config
   .argv()

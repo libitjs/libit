@@ -1,5 +1,5 @@
 export * from './store';
 export * from './stores';
 export * from './codecs';
-export * from './config';
+export * from './conf';
 export * from './utils';
