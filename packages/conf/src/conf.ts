@@ -39,7 +39,10 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions> extends Configurable<O> implements Iterable<[keyof T, T[keyof T]]> {
+export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions>
+  extends Configurable<O>
+  implements Iterable<[keyof T, T[keyof T]]>
+{
   stores: Record<string, Store>;
   sources: Store[];
 
@@ -56,7 +59,7 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   // Initializes this instance with additional `stores` or `sources` in the
   // `options` supplied.
 
-  * [Symbol.iterator](): IterableIterator<[keyof T, T[keyof T]]> {
+  *[Symbol.iterator](): IterableIterator<[keyof T, T[keyof T]]> {
     for (const [key, value] of Object.entries(this.get())) {
       yield [key, value];
     }

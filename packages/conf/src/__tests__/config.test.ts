@@ -85,9 +85,12 @@ describe('config When using config', () => {
     const conf = new Conf().memory();
     conf.set({
       foo: symbol,
-      bar: symbol
+      bar: symbol,
     });
-    expect([...conf]).deepEqual([['foo', symbol], ['bar', symbol]])
+    expect([...conf]).deepEqual([
+      ['foo', symbol],
+      ['bar', symbol],
+    ]);
   });
 
   describe('the default config', () => {
@@ -288,5 +291,4 @@ describe('config When using config', () => {
       expect(() => config.required(['not-exist'])).throw(/Missing required keys:/);
     });
   });
-
 });
