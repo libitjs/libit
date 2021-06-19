@@ -1,7 +1,7 @@
 {
   "name": "@libit/translate",
   "description": "APIs and implementation for globalization",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
     "verify": "npm pack && tar xf libit-translate*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/conf": "^0.4.3",
+    "@libit/conf": "^0.4.4",
     "debug": "^4.3.1",
     "i18next": "^20.3.2",
     "orx": "^0.1.5",
