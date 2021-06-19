@@ -202,7 +202,7 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
 
   get(): T;
   get<K extends keyof T>(key: K): T[K];
-  get<K extends keyof T>(key: K, defaultValue: Required<T>[K]): Required<T>[K];
+  get<K extends keyof T, Default = unknown>(key: K, defaultValue: Default): T[K] | Default;
   get(key?: string, defaultValue?: unknown): unknown {
     //
     // Otherwise the asynchronous, hierarchical `get` is
