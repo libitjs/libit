@@ -21,6 +21,7 @@
     "verify": "npm pack && tar xf libit-conf*.tgz && tree package && npm run clean"
   },
   "dependencies": {
+    "@libit/crypto": "^0.2.3",
     "ora": "^5.4.1",
     "orx": "^0.1.5",
     "tily": "^2.7.1",

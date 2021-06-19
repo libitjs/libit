@@ -14,19 +14,20 @@ import {Codec} from '../types';
 import * as codecs from '../codecs';
 import {detect} from '../detect';
 import {checkCodecRequires, resolveCodec} from '../codecs';
+import {SHA256} from '@libit/crypto/sha256';
 
 export interface FileOptions extends MemoryOptions {
   file: string;
   dir: string;
   codec: Codec | string;
-  secure: string | Buffer | FileSecure;
+  secure: Buffer | string | FileSecure;
   spacing: number;
   search: boolean;
 }
 
 export interface FileSecure {
   secretPath?: string;
-  secret: string;
+  secret: Buffer | string;
   alg: string;
 }
 
@@ -59,15 +60,23 @@ export class File extends Memory {
     this.spacing = options.spacing ?? 2;
 
     if (options.secure) {
+      let secret: Buffer | string;
       if (Buffer.isBuffer(options.secure) || typeof options.secure === 'string') {
-        this.secure = <FileSecure>(<unknown>{secret: options.secure.toString()});
+        this.secure = <FileSecure>{};
+        secret = options.secure;
       } else {
         this.secure = options.secure;
+        secret = this.secure.secret;
       }
 
-      this.secure.alg = this.secure.alg || 'aes-256-ctr';
+      this.secure.alg = this.secure.alg ?? 'aes-256-ctr';
       if (this.secure.secretPath) {
-        this.secure.secret = fs.readFileSync(this.secure.secretPath, 'utf8');
+        secret = fs.readFileSync(this.secure.secretPath, 'utf8');
+      }
+
+      // TODO hash secret for all plain secret text ?
+      if (secret) {
+        this.secure.secret = secret.length >= 32 ? secret : SHA256.digest(Buffer.from(secret));
       }
 
       if (!this.secure.secret) {
