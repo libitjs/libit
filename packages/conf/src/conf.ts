@@ -17,6 +17,7 @@ import {
 } from './stores';
 import {Codec, GenericConf} from './types';
 import {merge, traverseSync} from './utils';
+import {Configurable} from 'orx/configurable';
 
 export interface Source extends StoreOptions {
   type: string;
@@ -38,14 +39,15 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends GenericConf = GenericConf> {
+export class Conf<T extends GenericConf = GenericConf> extends Configurable<ConfOptions> {
   stores: Record<string, Store>;
   sources: Store[];
 
-  constructor(options: Partial<ConfOptions> = {}) {
+  constructor(options: ConfOptions = {}) {
+    super(options);
     this.stores = {};
     this.sources = [];
-    this.init(options);
+    this.init();
   }
 
   //
@@ -54,18 +56,18 @@ export class Conf<T extends GenericConf = GenericConf> {
   // Initializes this instance with additional `stores` or `sources` in the
   // `options` supplied.
   //
-  protected init(options: Partial<ConfOptions> = {}) {
+  protected init() {
     //
     // Add any stores passed in through the options
     // to this instance.
     //
-    if (options.type) {
-      this.add(options.type, options);
-    } else if (options.store) {
-      this.add(options.store.type, options.store);
-    } else if (options.stores) {
-      for (const name of Object.keys(options.stores)) {
-        const store = options.stores[name];
+    if (this.options.type) {
+      this.add(this.options.type, this.options);
+    } else if (this.options.store) {
+      this.add(this.options.store.type, this.options.store);
+    } else if (this.options.stores) {
+      for (const name of Object.keys(this.options.stores)) {
+        const store = this.options.stores[name];
         this.add(name, store);
       }
     }
@@ -73,11 +75,11 @@ export class Conf<T extends GenericConf = GenericConf> {
     //
     // Add any read-only sources to this instance
     //
-    if (options.source) {
-      this.sources.push(this.create(options.source.type, options.source));
-    } else if (options.sources) {
-      for (const name of Object.keys(options.sources)) {
-        const source = options.sources[name];
+    if (this.options.source) {
+      this.sources.push(this.create(this.options.source.type, this.options.source));
+    } else if (this.options.sources) {
+      for (const name of Object.keys(this.options.sources)) {
+        const source = this.options.sources[name];
         this.sources.push(this.create(source.type || name, source));
       }
     }

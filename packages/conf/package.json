@@ -21,6 +21,8 @@
     "verify": "npm pack && tar xf libit-conf*.tgz && tree package && npm run clean"
   },
   "dependencies": {
+    "ora": "^5.4.1",
+    "orx": "^0.1.5",
     "tily": "^2.7.1",
     "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0",
