@@ -23,11 +23,11 @@ export interface Source extends StoreOptions {
 }
 
 export interface ConfOptions {
-  type: string;
-  store: StoreOptions;
-  stores: Record<string, StoreOptions>;
-  source: Source;
-  sources: Record<string, Source>;
+  type?: string;
+  store?: StoreOptions;
+  stores?: Record<string, StoreOptions>;
+  source?: Source;
+  sources?: Record<string, Source>;
 }
 
 export type PossibleStoreOptions =
