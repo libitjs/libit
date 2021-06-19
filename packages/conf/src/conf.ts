@@ -39,7 +39,7 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions> extends Configurable<O> {
+export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions> extends Configurable<O> implements Iterable<[keyof T, T[keyof T]]> {
   stores: Record<string, Store>;
   sources: Store[];
 
@@ -55,33 +55,10 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   // #### @options {Object} Options to initialize this instance with.
   // Initializes this instance with additional `stores` or `sources` in the
   // `options` supplied.
-  //
-  protected init() {
-    //
-    // Add any stores passed in through the options
-    // to this instance.
-    //
-    if (this.options.type) {
-      this.add(this.options.type, this.options);
-    } else if (this.options.store) {
-      this.add(this.options.store.type, this.options.store);
-    } else if (this.options.stores) {
-      for (const name of Object.keys(this.options.stores)) {
-        const store = this.options.stores[name];
-        this.add(name, store);
-      }
-    }
 
-    //
-    // Add any read-only sources to this instance
-    //
-    if (this.options.source) {
-      this.sources.push(this.create(this.options.source.type, this.options.source));
-    } else if (this.options.sources) {
-      for (const name of Object.keys(this.options.sources)) {
-        const source = this.options.sources[name];
-        this.sources.push(this.create(source.type || name, source));
-      }
+  * [Symbol.iterator](): IterableIterator<[keyof T, T[keyof T]]> {
+    for (const [key, value] of Object.entries(this.get())) {
+      yield [key, value];
     }
   }
 
@@ -94,7 +71,9 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   file(key: string, options?: Partial<FileOptions> | string): this;
+
   file(key: Partial<FileOptions> | string): this;
+
   file(key: string | Partial<FileOptions>, options?: Partial<FileOptions> | string): this {
     if (!options) {
       options = typeof key === 'string' ? {file: key} : key;
@@ -121,17 +100,11 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     return this.add('overrides', options);
   }
 
-  //
-  // ### function use (name, options)
-  // #### @type {string} Type of the config store to use.
-  // #### @options {Object} Options for the store instance.
-  // Adds (or replaces) a new store with the specified `name`
-  // and `options`. If `options.type` is not set, then `name`
-  // will be used instead:
-  //
-  //    config.use('file');
-  //    config.use('file', { type: 'file', filename: '/path/to/userconf' })
-  //
+  memory(options: PossibleMemoryOptions | Partial<T> = {}) {
+    options = Object.assign({type: 'memory'}, options);
+    return this.add('memory', options);
+  }
+
   use(name: string, options: Record<string, any> = {}) {
     const store = this.stores[name];
     const update = store && !isEqual(store, options);
@@ -148,14 +121,16 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   //
-  // ### function add (name, options)
-  // #### @name {string} Name of the store to add to this instance
-  // #### @options {Object} Options for the store to create
-  // Adds a new store with the specified `name` and `options`. If `options.type`
-  // is not set, then `name` will be used instead:
+  // ### function use (name, options)
+  // #### @type {string} Type of the config store to use.
+  // #### @options {Object} Options for the store instance.
+  // Adds (or replaces) a new store with the specified `name`
+  // and `options`. If `options.type` is not set, then `name`
+  // will be used instead:
   //
-  //    config.add('memory');
-  //    config.add('userconf', { type: 'file', filename: '/path/to/userconf' })
+  //    config.use('file');
+  //    config.use('file', { type: 'file', filename: '/path/to/userconf' })
+
   //
   add(name: string, options: any): this {
     options = options || {};
@@ -172,20 +147,43 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   //
+  // ### function add (name, options)
+  // #### @name {string} Name of the store to add to this instance
+  // #### @options {Object} Options for the store to create
+  // Adds a new store with the specified `name` and `options`. If `options.type`
+  // is not set, then `name` will be used instead:
+  //
+  //    config.add('memory');
+  //    config.add('userconf', { type: 'file', filename: '/path/to/userconf' })
+
+  //
+  create(type: 'argv', options?: PossibleArgvOptions): Argv;
+
+  //
   // ### function create (type, options)
   // #### @type {string} Type of the config store to use.
   // #### @options {Object} Options for the store instance.
   // Creates a store of the specified `type` using the
   // specified `options`.
-  //
-  create(type: 'argv', options?: PossibleArgvOptions): Argv;
+
   create(type: 'env', options?: PossibleEnvOptions): Env;
+
   create(type: 'file', options?: PossibleFileOptions): File;
+
   create(type: 'literal', options?: PossibleLiteralOptions): Literal;
+
   create(type: 'memory', options?: PossibleMemoryOptions): Memory;
+
   create<S extends Store = Store>(type: string, options?: PossibleStoreOptions): S;
+
   create<S extends Store = Store>(type: string, options?: any): S {
     return <S>new Stores[type](options);
+  }
+
+  //
+  remove(name: string) {
+    delete this.stores[name];
+    return this;
   }
 
   //
@@ -194,15 +192,13 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   // Removes a store with the specified `name` from this instance. Users
   // are allowed to pass in a type argument (e.g. `memory`) as name if
   // this was used in the call to `.add()`.
-  //
-  remove(name: string) {
-    delete this.stores[name];
-    return this;
-  }
 
   get(): T;
+
   get<K extends keyof T>(key: K): T[K];
+
   get<K extends keyof T, Default = unknown>(key: K, defaultValue: Default): T[K] | Default;
+
   get(key?: string, defaultValue?: unknown): unknown {
     //
     // Otherwise the asynchronous, hierarchical `get` is
@@ -233,13 +229,16 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   //
+  any(...keys: string[]): any;
+
+  //
   // ### function any (keys, callback)
   // #### @keys {array|string...} Array of keys to query, or a variable list of strings
   // #### @callback {function} **Optional** Continuation to respond to when complete.
   // Retrieves the first truthy value (if any) for the specified list of keys.
-  //
-  any(...keys: string[]): any;
+
   any(keys: string[]): any;
+
   any(...keys: any[]): any {
     if (Array.isArray(keys[0])) {
       keys = keys[0];
@@ -253,6 +252,8 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     }
   }
 
+  set(obj: Partial<T>): boolean | undefined;
+
   //
   // ### function set (key, value, callback)
   // #### @key {string} Key to set in this instance
@@ -261,9 +262,10 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   // Sets the `value` for the specified `key` in this instance.
   //
 
-  set(obj: Partial<T>): boolean | undefined;
   set<K extends keyof T>(key: K, value: T[K]): boolean | undefined;
+
   set(key: string, value: any): boolean | undefined;
+
   set(key: string | any, value?: any): boolean | undefined {
     return traverseSync(this.stores, store => {
       if (!store.readOnly) {
@@ -272,9 +274,6 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     });
   }
 
-  //
-  // ### function required (keys)
-  // #### @keys {array} List of keys
   // Throws an error if any of `keys` has no value, otherwise returns `true`
   required(keys: string[]) {
     const missing: string[] = [];
@@ -290,12 +289,22 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   //
-  // ### function reset (callback)
-  // #### @callback {function} **Optional** Continuation to respond to when complete.
-  // Clears all keys associated with this instance.
+  // ### function required (keys)
+  // #### @keys {array} List of keys
+
   //
   reset(): boolean | undefined {
     return traverseSync(this.stores, store => store.reset());
+  }
+
+  //
+  // ### function reset (callback)
+  // #### @callback {function} **Optional** Continuation to respond to when complete.
+  // Clears all keys associated with this instance.
+
+  //
+  clear(key: string): boolean | undefined {
+    return traverseSync(this.stores, store => store.clear(key));
   }
 
   //
@@ -303,10 +312,9 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   // #### @key {string} Key to remove from this instance
   // #### @callback {function} **Optional** Continuation to respond to when complete.
   // Removes the value for the specified `key` from this instance.
+
   //
-  clear(key: string): boolean | undefined {
-    return traverseSync(this.stores, store => store.clear(key));
-  }
+  merge(key: Record<string, any>): boolean | undefined;
 
   //
   // ### function merge ([key,] value [, callback])
@@ -317,9 +325,9 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   //
   // 1. If the existing value `key` is not an Object, it will be completely overwritten.
   // 2. If `key` is not supplied, then the `value` will be merged into the root.
-  //
-  merge(key: Record<string, any>): boolean | undefined;
+
   merge(key: string, value: any): boolean | undefined;
+
   merge(key: string | Record<string, any>, value?: any): boolean | undefined {
     if (typeof key === 'string' && value !== undefined) {
       return traverseSync(this.stores, store => store.merge(key, value));
@@ -337,9 +345,6 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     throw new Error('Cannot merge non-object into top-level.');
   }
 
-  //
-  // ### function load (callback)
-  // Responds with an Object representing all keys associated in this instance.
   //
   async load(): Promise<T> {
     if (this.sources.length) {
@@ -360,6 +365,10 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     return merge(objs);
   }
 
+  //
+  // ### function load (callback)
+  // Responds with an Object representing all keys associated in this instance.
+
   loadSync(): Record<string, any> {
     if (this.sources.length) {
       const sourceHierarchy = this.sources.splice(0).reverse();
@@ -377,14 +386,6 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 
   //
-  // ### function save (callback)
-  // complete.
-  // Instructs each config to save.  If a callback is provided, we will attempt
-  // asynchronous saves on the configs, falling back to synchronous saves if
-  // this isn't possible.  If a config does not know how to save, it will be
-  // ignored.  Returns an object consisting of all of the data which was
-  // actually saved.
-  //
   async save(codec?: Codec): Promise<Record<string, any>> {
     return merge(
       (await Promise.all(Object.values(this.stores).map(store => store.save(codec)))).filter(
@@ -393,12 +394,51 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
     );
   }
 
+  //
+  // ### function save (callback)
+  // complete.
+  // Instructs each config to save.  If a callback is provided, we will attempt
+  // asynchronous saves on the configs, falling back to synchronous saves if
+  // this isn't possible.  If a config does not know how to save, it will be
+  // ignored.  Returns an object consisting of all of the data which was
+  // actually saved.
+
   saveSync(codec?: Codec): Record<string, any> {
     return merge(
       Object.values(this.stores)
         .map(store => store.saveSync(codec))
         .filter(data => data && typeof data === 'object'),
     );
+  }
+
+  //
+  protected init() {
+    //
+    // Add any stores passed in through the options
+    // to this instance.
+    //
+    if (this.options.type) {
+      this.add(this.options.type, this.options);
+    } else if (this.options.store) {
+      this.add(this.options.store.type, this.options.store);
+    } else if (this.options.stores) {
+      for (const name of Object.keys(this.options.stores)) {
+        const store = this.options.stores[name];
+        this.add(name, store);
+      }
+    }
+
+    //
+    // Add any read-only sources to this instance
+    //
+    if (this.options.source) {
+      this.sources.push(this.create(this.options.source.type, this.options.source));
+    } else if (this.options.sources) {
+      for (const name of Object.keys(this.options.sources)) {
+        const source = this.options.sources[name];
+        this.sources.push(this.create(source.type || name, source));
+      }
+    }
   }
 }
 

@@ -17,6 +17,8 @@ const mergeFixtures = path.join(fixturesDir, 'merge');
 const files = [path.join(mergeFixtures, 'file1.json'), path.join(mergeFixtures, 'file2.json')];
 const override = JSON.parse(fs.readFileSync(files[0], 'utf8'));
 
+const symbol = '🦄';
+
 describe('config When using config', () => {
   describe("an instance of 'Config'", () => {
     it(
@@ -77,6 +79,15 @@ describe('config When using config', () => {
     expect(config.get('SOMEINT')).eql(3600);
     expect(config.get('SOMEFLOAT')).eql(0.5);
     expect(config.get('SOMEBAD')).eql('5.1a');
+  });
+
+  it('instance is iterable', () => {
+    const conf = new Conf().memory();
+    conf.set({
+      foo: symbol,
+      bar: symbol
+    });
+    expect([...conf]).deepEqual([['foo', symbol], ['bar', symbol]])
   });
 
   describe('the default config', () => {
@@ -277,4 +288,5 @@ describe('config When using config', () => {
       expect(() => config.required(['not-exist'])).throw(/Missing required keys:/);
     });
   });
+
 });
