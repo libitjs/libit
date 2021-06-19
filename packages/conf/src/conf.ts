@@ -1,5 +1,6 @@
 import isEqual from 'tily/is/equal';
 import isPlainObject from 'tily/is/plainObject';
+import {Configurable} from 'orx/configurable';
 import {Store, StoreOptions} from './store';
 import {
   Argv,
@@ -17,7 +18,6 @@ import {
 } from './stores';
 import {Codec, GenericConf} from './types';
 import {merge, traverseSync} from './utils';
-import {Configurable} from 'orx/configurable';
 
 export interface Source extends StoreOptions {
   type: string;
@@ -39,11 +39,11 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends GenericConf = GenericConf> extends Configurable<ConfOptions> {
+export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions> extends Configurable<O> {
   stores: Record<string, Store>;
   sources: Store[];
 
-  constructor(options: ConfOptions = {}) {
+  constructor(options?: O) {
     super(options);
     this.stores = {};
     this.sources = [];
