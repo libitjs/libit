@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://gitr.net/mindary/libit/compare/@libit/conf@0.4.10...@libit/conf@0.5.0) (2021-06-20)
+
+
+### Features
+
+* re-implement file encryption to encrypt all content including keys ([e561b04](https://gitr.net/mindary/libit/commits/e561b048bb400073b7701188bcfd5454f539f752))
+
+
+
+
+
 ## [0.4.10](https://gitr.net/mindary/libit/compare/@libit/conf@0.4.9...@libit/conf@0.4.10) (2021-06-20)
 
 **Note:** Version bump only for package @libit/conf
