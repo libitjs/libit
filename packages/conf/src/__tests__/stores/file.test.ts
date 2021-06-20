@@ -9,9 +9,10 @@ import fs from 'fs-extra';
 import path from 'path';
 import {expect} from '@loopback/testlab';
 import tmp, {DirResult} from 'tmp';
-import {File} from '../../stores';
+import {File, SECURE_IV_SEP} from '../../stores';
 import {json5, yaml} from '../../codecs';
 import {MissingRequiredCodec} from '../mocks/missing-required-codec';
+import {getCipherAlgorithm} from '../../cipher';
 
 const sample = require('../fixtures/data').data;
 
@@ -230,28 +231,31 @@ describe('stores/file', () => {
     });
   });
   describe('secure 1', () => {
+    const secret = 'super-secret';
     const secureStore = new File({
       file: path.join(__dirname, '..', 'fixtures', 'secure-iv.json'),
-      secure: 'super-secret-key-32-characterszz',
+      secure: secret,
     });
 
     (secureStore as any)._store = sample;
 
     it('the encode() method should encrypt properly', () => {
-      const contents = JSON.parse(secureStore.encode());
-      Object.keys(sample).forEach(key => {
-        expect(typeof contents[key]).equal('object');
-        expect(typeof contents[key].value).equal('string');
-        expect(contents[key].alg).eql('aes-256-ctr');
-        expect(typeof contents[key].iv).equal('string');
+      const data = secureStore.encode();
+      expect(secureStore.secure).eql({
+        alg: 'aes-256-cbc',
+        secret,
       });
+      const alg = getCipherAlgorithm(secureStore.secure.alg);
+      expect(data.slice(alg.ivLen, alg.ivLen + SECURE_IV_SEP.length)).deepEqual(SECURE_IV_SEP);
     });
+
     it('the decode() method should decrypt properly', () => {
-      const contents = secureStore.encode();
-      const parsed = secureStore.decode(contents);
+      const data = secureStore.encode();
+      const parsed = secureStore.decode(data);
       expect(parsed).eql(sample);
     });
     it('the load() method should decrypt properly', async () => {
+      // secureStore.saveSync();
       const loaded = await secureStore.load();
       expect(loaded).eql(sample);
     });

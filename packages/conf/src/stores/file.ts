@@ -8,13 +8,14 @@
 
 import fs from 'fs-extra';
 import path from 'path';
-import crypto from 'crypto';
 import {Memory, MemoryOptions} from './memory';
 import {Codec} from '../types';
 import * as codecs from '../codecs';
-import {detect} from '../detect';
 import {checkCodecRequires, resolveCodec} from '../codecs';
-import {SHA256} from '@libit/crypto/sha256';
+import {detect} from '../detect';
+import {decrypt, encrypt, genIV, getCipherAlgorithm} from '../cipher';
+import isString from 'tily/is/string';
+import isEqual from 'tily/is/equal';
 
 export interface FileOptions extends MemoryOptions {
   file: string;
@@ -26,12 +27,14 @@ export interface FileOptions extends MemoryOptions {
 }
 
 export interface FileSecure {
+  alg: string;
   secretPath?: string;
   secret: Buffer | string;
-  alg: string;
 }
 
 export type PossibleFileOptions = Partial<FileOptions>;
+
+export const SECURE_IV_SEP = Buffer.from(':');
 
 //
 // ### function File (options)
@@ -69,15 +72,12 @@ export class File extends Memory {
         secret = this.secure.secret;
       }
 
-      this.secure.alg = this.secure.alg ?? 'aes-256-ctr';
+      this.secure.alg = this.secure.alg ?? 'aes-256-cbc';
       if (this.secure.secretPath) {
         secret = fs.readFileSync(this.secure.secretPath, 'utf8');
       }
 
-      // TODO hash secret for all plain secret text ?
-      if (secret) {
-        this.secure.secret = secret.length >= 32 ? secret : SHA256.digest(Buffer.from(secret));
-      }
+      this.secure.secret = secret;
 
       if (!this.secure.secret) {
         throw new Error('secure.secret option is required');
@@ -163,9 +163,9 @@ export class File extends Memory {
     // Else, the path exists, read it from disk
     //
     try {
-      let data = await fs.readFile(this.file, 'utf8');
+      let data = await fs.readFile(this.file, this.secure ? '' : 'utf8');
       // Deals with string that include BOM
-      if (data.charAt(0) === '\uFEFF') {
+      if (isString(data) && data.charAt(0) === '\uFEFF') {
         data = data.substr(1);
       }
 
@@ -193,8 +193,8 @@ export class File extends Memory {
     //
     try {
       // Deals with file that include BOM
-      let data = fs.readFileSync(this.file, 'utf8');
-      if (data.charAt(0) === '\uFEFF') {
+      let data = fs.readFileSync(this.file, this.secure ? null : 'utf8');
+      if (isString(data) && data.charAt(0) === '\uFEFF') {
         data = data.substr(1);
       }
 
@@ -212,26 +212,19 @@ export class File extends Memory {
   // `this.secure` is enabled
   //
   encode(codec?: Codec) {
-    let data = this.store;
     codec = codec ?? this.codec;
+    const spacing = this.spacing;
+    const encoded = codec.encode(this.store, {spacing});
+    let data = Buffer.from(encoded);
 
     if (this.secure) {
-      data = Object.keys(data).reduce((acc, key) => {
-        const value = codec!.encode(data[key]);
-        const iv = crypto.randomBytes(16);
-        const cipher = crypto.createCipheriv(this.secure.alg, this.secure.secret, iv);
-        let ciphertext = cipher.update(value, 'utf8', 'hex');
-        ciphertext += cipher.final('hex');
-        acc[key] = {
-          alg: this.secure.alg,
-          value: ciphertext,
-          iv: iv.toString('hex'),
-        };
-        return acc;
-      }, <Record<string, {alg: string; value: string; iv: string}>>{});
+      const alg = getCipherAlgorithm(this.secure.alg);
+      const iv = genIV(alg);
+      const encrypted = encrypt(alg, this.secure.secret, iv, data);
+      data = Buffer.concat([iv, SECURE_IV_SEP, encrypted]);
     }
 
-    return codec.encode(data, {spacing: this.spacing});
+    return data;
   }
 
   //
@@ -239,24 +232,20 @@ export class File extends Memory {
   // Returns a decrypted version of the contents IFF
   // `this.secure` is enabled.
   //
-  decode(contents: string) {
-    let parsed = this.codec.decode(contents);
-
+  decode(contents: string | Buffer) {
     if (this.secure) {
-      parsed = Object.keys(parsed).reduce((acc, name) => {
-        const value = parsed[name];
-        if (!value.iv) {
-          throw new Error('"iv" is required');
-        }
-        const decipher = crypto.createDecipheriv(value.alg, this.secure.secret, Buffer.from(value.iv, 'hex'));
-        let plaintext = decipher.update(value.value, 'hex', 'utf8');
-        plaintext += decipher.final('utf8');
-        acc[name] = this.codec.decode(plaintext);
-        return acc;
-      }, <Record<string, string>>{});
+      const data = Buffer.isBuffer(contents) ? contents : Buffer.from(contents);
+      const alg = getCipherAlgorithm(this.secure.alg);
+      if (!isEqual(data.slice(alg.ivLen, alg.ivLen + SECURE_IV_SEP.length), SECURE_IV_SEP)) {
+        throw new Error('"iv" is required');
+      }
+      const iv = data.slice(0, alg.ivLen);
+      const ciphertext = data.slice(alg.ivLen + SECURE_IV_SEP.length);
+      const decrypted = decrypt(alg, this.secure.secret, iv, ciphertext);
+      contents = decrypted.toString();
     }
 
-    return parsed;
+    return this.codec.decode(contents.toString('utf8'));
   }
 
   //
