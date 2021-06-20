@@ -1,9 +1,9 @@
 import {assert} from '@libit/bsert';
 import fs from 'fs';
+import path from 'path';
 import {cipher as c} from '../../cipher';
 import {random as rng} from '../../random';
 import {Cipher} from '../../types';
-import path from 'path';
 /* eslint-disable @typescript-eslint/naming-convention */
 const algs = [
   {
