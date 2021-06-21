@@ -1,8 +1,8 @@
 import * as paths from 'orx/paths';
-import {createTranslator as create, TranslatorOptions} from '@libit/translate';
+import {createTranslator as originCreateTranslator, TranslatorOptions} from '@libit/translate';
 
 export function createTranslator(options?: TranslatorOptions) {
-  return create('log', paths.join(__dirname, '..', 'intl'), options);
+  return originCreateTranslator('log', paths.join(__dirname, '..', 'intl'), options);
 }
 
 export default createTranslator();
