@@ -1,0 +1,16 @@
+{
+  "name": "simple-app",
+  "description": "A test fixture for pkginfo",
+  "version": "0.1.0",
+  "keywords": [
+    "test",
+    "fixture"
+  ],
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "mocha __tests__/**/*.test.js"
+  },
+  "engines": {
+    "node": ">= 12"
+  }
+}

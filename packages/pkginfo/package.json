@@ -1,0 +1,45 @@
+{
+  "name": "@libit/pkginfo",
+  "description": "An easy way to expose properties on a module from a package.json",
+  "version": "0.1.0",
+  "keywords": [
+    "info",
+    "data",
+    "appplication",
+    "package.json",
+    "package"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-pkginfo*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-pkginfo*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "pkg-up": "^3.1.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/node": "^15.12.4",
+    "execa": "^5.1.1"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ]
+}

@@ -23,6 +23,9 @@
       "path": "packages/log/tsconfig.json"
     },
     {
+      "path": "packages/pkginfo/tsconfig.json"
+    },
+    {
       "path": "packages/pki/tsconfig.json"
     },
     {
