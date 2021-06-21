@@ -1,7 +1,7 @@
 {
   "name": "@libit/pkginfo",
   "description": "An easy way to expose properties on a module from a package.json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [
     "info",
     "data",
