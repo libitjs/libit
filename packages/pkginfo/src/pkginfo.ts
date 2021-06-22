@@ -22,9 +22,15 @@ export interface PkgInfo {
 
 async function pkginfoAsync(normalization?: true): Promise<[NormalizedPackageJson, string]>;
 async function pkginfoAsync(normalization: false): Promise<[PackageJson, string]>;
-async function pkginfoAsync(dirOrModule?: NodeModule | string, normalization?: boolean): Promise<[NormalizedPackageJson, string]>;
+async function pkginfoAsync(
+  dirOrModule?: NodeModule | string,
+  normalization?: boolean,
+): Promise<[NormalizedPackageJson, string]>;
 async function pkginfoAsync(dirOrModule: NodeModule | string, normalization: false): Promise<[PackageJson, string]>;
-async function pkginfoAsync(dirOrModule?: NodeModule | string | boolean, normalization?: boolean): Promise<[any, string]> {
+async function pkginfoAsync(
+  dirOrModule?: NodeModule | string | boolean,
+  normalization?: boolean,
+): Promise<[any, string]> {
   if (typeof dirOrModule === 'boolean') {
     normalization = dirOrModule;
     dirOrModule = undefined;
@@ -44,7 +50,6 @@ async function pkginfoAsync(dirOrModule?: NodeModule | string | boolean, normali
   }
   return [json, dir];
 }
-
 
 function pkginfoSync(normalization?: true): [NormalizedPackageJson, string];
 function pkginfoSync(normalization: false): [PackageJson, string];
@@ -73,5 +78,3 @@ function pkginfoSync(dirOrModule?: NodeModule | string | boolean, normalization?
 
 export const pkginfo: PkgInfo = pkginfoAsync as any;
 pkginfo.sync = pkginfoSync;
-
-

@@ -1,4 +1,5 @@
 import {expect} from '@loopback/testlab';
+import * as pkgUp from 'pkg-up';
 import {appinfo, PackageJson, pkginfo} from '..';
 import {execScriptFromFixtures, fixturesPath, readPkgFromFixtures} from './support';
 
@@ -7,11 +8,10 @@ function assertPkgInfoWithFixtures(real: PackageJson, expectPackageDirToFixtures
 }
 
 describe('pkginfo', () => {
-
-  describe('async', function() {
+  describe('async', function () {
     it('should read package json from module with undefined module parameter', async () => {
       const [real] = await pkginfo(false);
-      expect(real).eql(require('../../package.json'));
+      expect(real).eql(require(pkgUp.sync({cwd: '.'})!));
     });
 
     it('should read package json from module', async () => {
@@ -44,10 +44,10 @@ describe('pkginfo', () => {
     });
   });
 
-  describe('sync', function() {
+  describe('sync', function () {
     it('should read package json from module with undefined module parameter', () => {
       const [real] = pkginfo.sync(false);
-      expect(real).eql(require('../../package.json'));
+      expect(real).eql(require(pkgUp.sync({cwd: '.'})!));
     });
 
     it('should read package json from module', () => {
@@ -80,7 +80,7 @@ describe('pkginfo', () => {
     });
   });
 
-  describe('integration', function() {
+  describe('integration', function () {
     it('should read host package json from local', () => {
       assertPkgInfoWithFixtures(execScriptFromFixtures('local.js'), '.');
     });
@@ -93,5 +93,4 @@ describe('pkginfo', () => {
       assertPkgInfoWithFixtures(execScriptFromFixtures('sub-host.js'), '.');
     });
   });
-
 });

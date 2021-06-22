@@ -55,27 +55,31 @@ console.log(await pkginfo('some-other-directory'));
 Here's a sample of the output:
 
 ```js
-[ '.../fixtures', { 
-  name: 'simple-app',
-  description: 'A test fixture for pkginfo',
-  version: '0.1.0',
-  keywords: [ 'test', 'fixture' ],
-  main: './dist/index.js',
-  scripts: { test: 'mocha __tests__/**/*.test.js' },
-  engines: { node: '>= 12'
-}}]
+[
+  '.../fixtures',
+  {
+    name: 'simple-app',
+    description: 'A test fixture for pkginfo',
+    version: '0.1.0',
+    keywords: ['test', 'fixture'],
+    main: './dist/index.js',
+    scripts: {test: 'mocha __tests__/**/*.test.js'},
+    engines: {node: '>= 12'},
+  },
+];
 ```
 
-## API 
+## API
+
 ### `pkginfo(dirOrModule?: NodeModule | string, normalization?: boolean)`
 
-Returns a `Promise<[PackageJson, string]>` or `Promise<[NormalizePackageJson, string]>` for package data and package file directory,
-or Promise<[null, null]> if couldn't be found.
+Returns a `Promise<[PackageJson, string]>` or `Promise<[NormalizePackageJson, string]>` for package data and package
+file directory, or Promise<[null, null]> if couldn't be found.
 
 ### `pkginfo.sync(dirOrModule?: NodeModule | string, normalization?: boolean)`
 
-Returns a `[PackageJson, string]` or `NormalizePackageJson, string` for package data and package file directory,
-or [null, null] if couldn't be found.
+Returns a `[PackageJson, string]` or `NormalizePackageJson, string` for package data and package file directory, or
+[null, null] if couldn't be found.
 
 ### `appinfo(normalization?: boolean)` and `appinfo.sync(normalization?: boolean)`
 
