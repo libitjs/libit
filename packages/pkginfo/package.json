@@ -1,7 +1,7 @@
 {
   "name": "@libit/pkginfo",
   "description": "An easy way to find and read package json whether from a submodule or the application",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "keywords": [
     "info",
     "data",
@@ -49,5 +49,6 @@
   ],
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "fe0a338b72db45d70a0e3a651549553803a9e41d"
 }
