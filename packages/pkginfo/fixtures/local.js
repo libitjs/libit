@@ -1,2 +1,4 @@
-const pkg = require('..').pkginfo(module);
-console.log(JSON.stringify(pkg));
+const {pkginfo} = require('..')
+
+const [data] = pkginfo.sync(module, false);
+console.log(JSON.stringify(data));

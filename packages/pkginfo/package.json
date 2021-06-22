@@ -1,6 +1,6 @@
 {
   "name": "@libit/pkginfo",
-  "description": "An easy way to expose properties on a module from a package.json",
+  "description": "An easy way to find and read package json whether from a submodule or the application",
   "version": "0.2.0",
   "keywords": [
     "info",
@@ -26,14 +26,19 @@
     "verify": "npm pack && tar xf libit-pkginfo*.tgz && tree package && npm run clean"
   },
   "dependencies": {
+    "@types/normalize-package-data": "^2.4.0",
+    "normalize-package-data": "^3.0.2",
+    "parse-json": "^5.2.0",
     "pkg-up": "^3.1.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "type-fest": "^1.2.1"
   },
   "devDependencies": {
     "@loopback/build": "^6.4.1",
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/node": "^15.12.4",
+    "@types/parse-json": "^4.0.0",
     "execa": "^5.1.1"
   },
   "files": [

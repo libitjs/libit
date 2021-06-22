@@ -1,42 +1,97 @@
 import {expect} from '@loopback/testlab';
-import pkginfo, {appPkgInfo, PackageInfo} from '..';
+import {appinfo, PackageJson, pkginfo} from '..';
 import {execScriptFromFixtures, fixturesPath, readPkgFromFixtures} from './support';
 
-function assertPkgInfoWithFixtures(real: PackageInfo, expectPackageDirToFixtures: string) {
+function assertPkgInfoWithFixtures(real: PackageJson, expectPackageDirToFixtures: string) {
   expect(real).eql(readPkgFromFixtures(expectPackageDirToFixtures));
 }
 
 describe('pkginfo', () => {
-  it('should read package json from module with undefined module parameter', function () {
-    expect(pkginfo()).eql(require('../../package.json'));
+
+  describe('async', function() {
+    it('should read package json from module with undefined module parameter', async () => {
+      const [real] = await pkginfo(false);
+      expect(real).eql(require('../../package.json'));
+    });
+
+    it('should read package json from module', async () => {
+      const [real] = await pkginfo(module, false);
+      expect(real).eql(require('../../package.json'));
+    });
+
+    it('host package json should not match with local', async () => {
+      const [real] = await pkginfo(require.main, false);
+      expect(real).not.eql(require('../../package.json'));
+    });
+
+    it('get application package json', async () => {
+      const [real] = await appinfo(false);
+      const [expected] = await pkginfo(require.main, false);
+      expect(real).eql(expected);
+    });
+
+    it('should read package json from dir', async () => {
+      const [real] = await pkginfo(fixturesPath('.'), false);
+      assertPkgInfoWithFixtures(real, '.');
+    });
+
+    it('normalize', async () => {
+      const [normalized] = await appinfo();
+      const [original] = await appinfo(false);
+      expect(normalized).not.eql(original);
+      expect(normalized).have.property('_id');
+      expect(original).not.have.property('_id');
+    });
   });
 
-  it('should read package json from module', function () {
-    expect(pkginfo(module)).eql(require('../../package.json'));
+  describe('sync', function() {
+    it('should read package json from module with undefined module parameter', () => {
+      const [real] = pkginfo.sync(false);
+      expect(real).eql(require('../../package.json'));
+    });
+
+    it('should read package json from module', () => {
+      const [real] = pkginfo.sync(module, false);
+      expect(real).eql(require('../../package.json'));
+    });
+
+    it('host package json should not match with local', () => {
+      const [real] = pkginfo.sync(require.main, false);
+      expect(real).not.eql(require('../../package.json'));
+    });
+
+    it('get application package json', () => {
+      const real = appinfo.sync(false);
+      const expected = pkginfo.sync(require.main, false);
+      expect(real).eql(expected);
+    });
+
+    it('should read package json from dir', () => {
+      const [real] = pkginfo.sync(fixturesPath('.'), false);
+      assertPkgInfoWithFixtures(real, '.');
+    });
+
+    it('normalize', () => {
+      const [normalized] = appinfo.sync();
+      const [original] = appinfo.sync(false);
+      expect(normalized).not.eql(original);
+      expect(normalized).have.property('_id');
+      expect(original).not.have.property('_id');
+    });
   });
 
-  it('host package json should not match with local', function () {
-    const hostPkg = pkginfo(require.main);
-    expect(hostPkg).not.eql(require('../../package.json'));
+  describe('integration', function() {
+    it('should read host package json from local', () => {
+      assertPkgInfoWithFixtures(execScriptFromFixtures('local.js'), '.');
+    });
+
+    it('should read sub package json from sub module', () => {
+      assertPkgInfoWithFixtures(execScriptFromFixtures('sub-local.js'), './modules/foo');
+    });
+
+    it('should read host package json from sub module', () => {
+      assertPkgInfoWithFixtures(execScriptFromFixtures('sub-host.js'), '.');
+    });
   });
 
-  it('get application package json', function () {
-    expect(appPkgInfo()).eql(pkginfo(require.main));
-  });
-
-  it('should read package json from dir', function () {
-    assertPkgInfoWithFixtures(pkginfo(fixturesPath('.')), '.');
-  });
-
-  it('should read host package json from local', () => {
-    assertPkgInfoWithFixtures(execScriptFromFixtures('local.js'), '.');
-  });
-
-  it('should read sub package json from sub module', function () {
-    assertPkgInfoWithFixtures(execScriptFromFixtures('sub-local.js'), './modules/foo');
-  });
-
-  it('should read host package json from sub module', function () {
-    assertPkgInfoWithFixtures(execScriptFromFixtures('sub-host.js'), '.');
-  });
 });
