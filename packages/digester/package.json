@@ -1,0 +1,43 @@
+{
+  "name": "@libit/digester",
+  "description": "A digest library for data digesting and verification",
+  "version": "0.2.4",
+  "keywords": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.16"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-digester*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run build",
+    "test": "lb-mocha \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-digester*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "@libit/crypto": "^0.2.5",
+    "buffer": "^6.0.3",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^6.4.1",
+    "@loopback/eslint-config": "^10.2.1",
+    "@loopback/testlab": "^3.4.1",
+    "@types/node": "^15.12.4"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "7c7e1e5daa9e5d693e60ade1615aeafda148ad11"
+}
