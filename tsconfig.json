@@ -20,6 +20,12 @@
       "path": "packages/decorators/tsconfig.json"
     },
     {
+      "path": "packages/digester/tsconfig.json"
+    },
+    {
+      "path": "packages/josa/tsconfig.json"
+    },
+    {
       "path": "packages/log/tsconfig.json"
     },
     {
