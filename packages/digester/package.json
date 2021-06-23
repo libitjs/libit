@@ -1,7 +1,7 @@
 {
   "name": "@libit/digester",
   "description": "A digest library for data digesting and verification",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
