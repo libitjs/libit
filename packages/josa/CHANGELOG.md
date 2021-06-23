@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2021-06-23)
+
+
+### Features
+
+* add josa package ([0f28e4e](https://gitr.net/mindary/libit/commits/0f28e4e2565d2c44a5c5541b3f99a8721c0b4992))
+
+
+
+
+
 ## [0.2.5](https://gitr.net/mindary/libit/compare/@libit/josa@0.2.4...@libit/josa@0.2.5) (2021-06-17)
 
 

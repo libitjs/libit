@@ -1,6 +1,6 @@
 {
   "name": "@libit/josa",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "JSON Object Signing and Authentication JS library",
   "author": "Mindary",
   "license": "MIT",
