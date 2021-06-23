@@ -1,7 +1,7 @@
 {
   "name": "@libit/sn",
   "description": "A simple Node.js module for accessing the serial number of the local machine. Supports Linux, Mac (OS X), Windows, and FreeBSD.",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "keywords": [
     "serial",
     "number",
