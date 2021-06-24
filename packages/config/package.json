@@ -1,7 +1,7 @@
 {
   "name": "@libit/config",
   "description": "A Hierarchical node.js configuration library with files, environment variables, command-line arguments, and atomic object merging.",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "verify": "npm pack && tar xf libit-config*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/crypto": "^0.2.6",
+    "@libit/crypto": "^0.2.7",
     "ora": "^5.4.1",
     "orx": "^0.1.5",
     "tily": "^2.7.1",

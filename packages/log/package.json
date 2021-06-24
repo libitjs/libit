@@ -1,7 +1,7 @@
 {
   "name": "@libit/log",
   "description": "Lightweight level based logging system.",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
     "verify": "npm pack && tar xf libit-log*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/translate": "^0.6.13",
+    "@libit/translate": "^0.6.14",
     "individual": "^3.0.0",
     "orx": "^0.1.5",
     "tily": "^2.7.1",

@@ -1,7 +1,7 @@
 {
   "name": "@libit/bsert",
   "description": "Minimal assert with type checking",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
