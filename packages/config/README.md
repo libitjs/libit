@@ -1,4 +1,4 @@
-# @libit/conf
+# @libit/config
 
 > A Hierarchical node.js configuration library with files, environment variables, command-line arguments, and atomic
 > object merging.
@@ -10,7 +10,7 @@ for yaml, ini and toml formats.
 
 ```js
 const path = require('path');
-const {Config, yaml} = require('@libit/conf');
+const {Config, yaml} = require('packages/config');
 
 const conf1 = new Config();
 
@@ -37,20 +37,20 @@ console.log(conf1.get());
 ## Installation
 
 ```bash
-$ npm install @libit/conf --save
+$ npm install @libit/config --save
 ```
 
 ## Example
 
 ```js
-const {Config} = require('@libit/conf');
+const {Config} = require('packages/config');
 
-const conf = new Config();
+const config = new Config();
 
 //
 // 1. any overrides
 //
-conf.overrides({
+config.overrides({
   always: 'be this value',
 });
 
@@ -58,24 +58,24 @@ conf.overrides({
 // 2. `process.env`
 // 3. `process.argv`
 //
-conf.env().argv();
+config.env().argv();
 
 //
 // 4. Values in `config.json`
 //
-conf.file('/path/to/config.json');
+config.file('/path/to/config.json');
 
 //
 // Or with a custom name
 // Note: A custom key must be supplied for hierarchy to work if multiple files are used.
 //
-conf.file('custom', '/path/to/config.json');
+config.file('custom', '/path/to/config.json');
 
 //
 // Or searching from a base directory.
 // Note: `name` is optional.
 //
-conf.file(name, {
+config.file(name, {
   file: 'config.json',
   dir: 'search/from/here',
   search: true,
@@ -84,7 +84,7 @@ conf.file(name, {
 //
 // 5. Any default values
 //
-conf.defaults({
+config.defaults({
   'if nothing else': 'use this value',
 });
 ```
@@ -105,26 +105,26 @@ database: { host: '127.0.0.1', port: 5984 }
 
 ## Hierarchical configuration
 
-Configuration management can get complicated very quickly for even trivial applications running in production. `conf`
+Configuration management can get complicated very quickly for even trivial applications running in production. `config`
 addresses this problem by enabling you to setup a hierarchy for different sources of configuration with no defaults.
 **The order in which you attach these configuration sources determines their priority in the hierarchy.** Let's take a
 look at the options available to you
 
-1. **conf.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
-2. **conf.env(options)** Loads `process.env` into the hierarchy.
-3. **conf.file(options)** Loads the configuration data at options.file into the hierarchy.
-4. **conf.defaults(options)** Loads the data in options.store into the hierarchy.
-5. **conf.overrides(options)** Loads the data in options.store into the hierarchy.
+1. **config.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
+2. **config.env(options)** Loads `process.env` into the hierarchy.
+3. **config.file(options)** Loads the configuration data at options.file into the hierarchy.
+4. **config.defaults(options)** Loads the data in options.store into the hierarchy.
+5. **config.overrides(options)** Loads the data in options.store into the hierarchy.
 
 A sane default for this could be:
 
 ```js
-const {conf} = require('@libit/conf');
+const {config} = require('packages/config');
 
 //
 // 1. any overrides
 //
-conf.overrides({
+config.overrides({
   always: 'be this value',
 });
 
@@ -132,24 +132,24 @@ conf.overrides({
 // 2. `process.env`
 // 3. `process.argv`
 //
-conf.env().argv();
+config.env().argv();
 
 //
 // 4. Values in `config.json`
 //
-conf.file('/path/to/config.json');
+config.file('/path/to/config.json');
 
 //
 // Or with a custom name
 // Note: A custom key must be supplied for hierarchy to work if multiple files are used.
 //
-conf.file('custom', '/path/to/config.json');
+config.file('custom', '/path/to/config.json');
 
 //
 // Or searching from a base directory.
 // Note: `name` is optional.
 //
-conf.file(name, {
+config.file(name, {
   file: 'config.json',
   dir: 'search/from/here',
   search: true,
@@ -158,27 +158,27 @@ conf.file(name, {
 //
 // 5. Any default values
 //
-conf.defaults({
+config.defaults({
   'if nothing else': 'use this value',
 });
 ```
 
 ## API Documentation
 
-The variable `conf` is an instance of the `Config` abstracts this all for you into a simple API.
+The variable `config` is an instance of the `Config` abstracts this all for you into a simple API.
 
-### conf.add(name, options)
+### config.add(name, options)
 
 Adds a new store with the specified `name` and `options`. If `options.type` is not set, then `name` will be used
 instead:
 
 ```js
-  conf.add('supplied', { type: 'literal', store: { 'some': 'config' });
-  conf.add('user', { type: 'file', file: '/path/to/userconf.json' });
-  conf.add('global', { type: 'file', file: '/path/to/globalconf.json' });
+  config.add('supplied', { type: 'literal', store: { 'some': 'config' });
+  config.add('user', { type: 'file', file: '/path/to/userconf.json' });
+  config.add('global', { type: 'file', file: '/path/to/globalconf.json' });
 ```
 
-### conf.any(names, callback)
+### config.any(names, callback)
 
 Given a set of key names, gets the value of the first key found to be truthy. The key names can be given as separate
 arguments or as an array. If the last argument is a function, it will be called with the result; otherwise, the value is
@@ -188,51 +188,51 @@ returned.
 //
 // Get one of 'NODEJS_PORT' and 'PORT' as a return value
 //
-var port = conf.any('NODEJS_PORT', 'PORT');
+var port = config.any('NODEJS_PORT', 'PORT');
 
 //
 // Get one of 'NODEJS_IP' and 'IPADDRESS' using a callback
 //
-conf.any(['NODEJS_IP', 'IPADDRESS'], function (err, value) {
+config.any(['NODEJS_IP', 'IPADDRESS'], function (err, value) {
   console.log('Connect to IP address ' + value);
 });
 ```
 
-### conf.use(name, options)
+### config.use(name, options)
 
-Similar to `conf.add`, except that it can replace an existing store if new options are provided
+Similar to `config.add`, except that it can replace an existing store if new options are provided
 
 ```js
 //
-// Load a file store onto conf with the specified settings
+// Load a file store onto config with the specified settings
 //
-conf.use('file', {file: '/path/to/some/config-file.json'});
+config.use('file', {file: '/path/to/some/config-file.json'});
 
 //
 // Replace the file store with new settings
 //
-conf.use('file', {file: 'path/to/a-new/config-file.json'});
+config.use('file', {file: 'path/to/a-new/config-file.json'});
 ```
 
-### conf.remove(name)
+### config.remove(name)
 
 Removes the store with the specified `name.` The configuration stored at that level will no longer be used for
 lookup(s).
 
 ```js
-conf.remove('file');
+config.remove('file');
 ```
 
-### conf.required(keys)
+### config.required(keys)
 
 Declares a set of string keys to be mandatory, and throw an error if any are missing.
 
 ```js
-conf.defaults({
+config.defaults({
   keya: 'a',
 });
 
-conf.required(['keya', 'keyb']);
+config.required(['keya', 'keyb']);
 // Error: Missing required keys: keyb
 ```
 
@@ -240,7 +240,7 @@ You can also chain `.required()` calls when needed. for example when a configura
 store
 
 ```js
-conf
+config
   .argv()
   .env()
   .required(['STAGE']) //here you should have STAGE otherwise throw an error
@@ -265,7 +265,7 @@ just call `.use()` with the appropriate arguments. All calls to `.get()`, `.set(
 synchronous since we are only dealing with an in-memory object.
 
 ```js
-conf.use('memory');
+config.use('memory');
 ```
 
 ### Argv
@@ -310,7 +310,7 @@ Pass yargs options for yargs building.
 //
 // Can optionally also be an object literal to pass to `yargs`.
 //
-conf.argv({
+config.argv({
   x: {
     alias: 'example',
     describe: 'Example description for usage generation',
@@ -330,7 +330,7 @@ conf.argv({
 It's also possible to pass a configured yargs instance
 
 ```js
-conf.argv(
+config.argv(
   require('yargs')
     .version('1.2.3')
     .usage('My usage definition')
@@ -357,7 +357,7 @@ variables values are loaded into the configuration as strings.
 
 Convert all input keys to lower case. Values are not modified.
 
-If this option is enabled, all calls to `conf.get()` must pass in a lowercase string (e.g. `conf.get('port')`)
+If this option is enabled, all calls to `config.get()` must pass in a lowercase string (e.g. `config.get('port')`)
 
 ##### `parseValues: {true|false}` (default: `false`)
 
@@ -395,14 +395,14 @@ updated.
   //
   // Can optionally also be an Array of values to limit process.env to.
   //
-  conf.env(['only', 'load', 'these', 'values', 'from', 'process.env']);
+  config.env(['only', 'load', 'these', 'values', 'from', 'process.env']);
 
   //
   // Can also specify a separator for nested keys (instead of the default ':')
   //
-  conf.env('__');
+  config.env('__');
   // Get the value of the env variable 'database__host'
-  var dbHost = conf.get('database:host');
+  var dbHost = config.get('database:host');
 
   //
   // Can also lowerCase keys.
@@ -411,16 +411,16 @@ updated.
   //
 
   // Given an environment variable PORT=3001
-  conf.env();
-  var port = conf.get('port') // undefined
+  config.env();
+  var port = config.get('port') // undefined
 
-  conf.env({ lowerCase: true });
-  var port = conf.get('port') // 3001
+  config.env({ lowerCase: true });
+  var port = config.get('port') // 3001
 
   //
   // Or use all options
   //
-  conf.env({
+  config.env({
     separator: '__',
     match: /^whatever_matches_this_will_be_whitelisted/
     whitelist: ['database__host', 'only', 'load', 'these', 'values', 'if', 'whatever_doesnt_match_but_is_whitelisted_gets_loaded_too'],
@@ -433,16 +433,16 @@ updated.
       return obj;
     }
   });
-  var dbHost = conf.get('database:host');
+  var dbHost = config.get('database:host');
 ```
 
 ### Literal
 
-Loads a given object literal into the configuration hierarchy. Both `conf.defaults()` and `conf.overrides()` use the
+Loads a given object literal into the configuration hierarchy. Both `config.defaults()` and `config.overrides()` use the
 Literal store.
 
 ```js
-conf.defaults({
+config.defaults({
   some: 'default value',
 });
 ```
@@ -457,10 +457,10 @@ It is important to note that setting keys in the File engine will not be persist
 made. Note a custom key must be supplied as the first parameter for hierarchy to work if multiple files are used.
 
 ```js
-conf.file('path/to/your/config.json');
+config.file('path/to/your/config.json');
 // add multiple files, hierarchically. notice the unique key for each file
-conf.file('user', 'path/to/your/user.json');
-conf.file('global', 'path/to/your/global.json');
+config.file('user', 'path/to/your/user.json');
+config.file('global', 'path/to/your/global.json');
 ```
 
 The file store is also extensible for multiple file formats, defaulting to `JSON`. To use a custom format, simply pass a
@@ -471,10 +471,10 @@ If the file does not exist at the provided path, the store will simply be empty.
 
 #### Encrypting file contents
 
-As of `conf@0.8.0` it is now possible to encrypt and decrypt file contents using the `secure` option:
+As of `config@0.8.0` it is now possible to encrypt and decrypt file contents using the `secure` option:
 
 ```js
-conf.file('secure-file', {
+config.file('secure-file', {
   file: 'path/to/secure-file.json',
   secure: {
     secret: 'super-secretzzz-keyzz',

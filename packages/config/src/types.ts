@@ -1,7 +1,5 @@
 import {OpenMode} from 'fs';
 
-export type GenericConf = Record<string, any>;
-
 export type TransformFn = (obj: {key: string; value: any}) => any;
 
 export interface FileReadOptions {

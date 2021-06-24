@@ -11,7 +11,7 @@
       "path": "packages/bufio/tsconfig.json"
     },
     {
-      "path": "packages/conf/tsconfig.json"
+      "path": "packages/config/tsconfig.json"
     },
     {
       "path": "packages/crypto/tsconfig.json"

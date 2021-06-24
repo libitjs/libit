@@ -6,8 +6,8 @@
  *
  */
 
-import {Conf} from '../../../conf';
+import {Config} from '../../../config';
 
-const config = new Conf().env('_');
+const config = new Config().env('_');
 
 process.stdout.write(config.get('SOME:THING')!);

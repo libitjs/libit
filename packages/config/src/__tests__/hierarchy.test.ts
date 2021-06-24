@@ -8,7 +8,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import {expect} from '@loopback/testlab';
-import {Conf} from '../conf';
+import {Config} from '../config';
 import execa from 'execa';
 
 const configDir = path.join(__dirname, 'fixtures', 'hierarchy');
@@ -16,7 +16,7 @@ const globalConfig = path.join(configDir, 'global.json');
 const userConfig = path.join(configDir, 'user.json');
 
 describe('config/hierarchy, When using config', () => {
-  const config = new Conf();
+  const config = new Config();
 
   it('configured with two file stores, should have the appropriate keys present', async () => {
     config.add('user', {type: 'file', file: userConfig});

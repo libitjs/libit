@@ -5,8 +5,8 @@
  *
  */
 
-import {Conf} from '../../../conf';
+import {Config} from '../../../config';
 
-const provider = new Conf().env();
+const provider = new Config().env();
 
 process.stdout.write(provider.get('SOMETHING')!);

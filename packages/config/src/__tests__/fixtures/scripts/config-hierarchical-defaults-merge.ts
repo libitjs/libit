@@ -1,7 +1,7 @@
 import path from 'path';
-import {Conf} from '../../../conf';
+import {Config} from '../../../config';
 
-const config = new Conf();
+const config = new Config();
 
 config
   .file('localOverrides', path.join(__dirname, '..', 'merge', 'file3.json'))

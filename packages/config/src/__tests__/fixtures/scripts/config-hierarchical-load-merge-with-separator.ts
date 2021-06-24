@@ -7,11 +7,11 @@
  */
 
 import path from 'path';
-import {Conf} from '../../../conf';
+import {Config} from '../../../config';
 
-const config = new Conf();
+const config = new Config();
 
-config.argv().file(path.join(__dirname, '..', 'merge', 'file1.json'));
+config.argv('--').env('__').file(path.join(__dirname, '..', 'merge', 'file1.json'));
 
 process.stdout.write(
   JSON.stringify({

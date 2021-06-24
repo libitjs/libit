@@ -7,9 +7,9 @@
  */
 
 import path from 'path';
-import {Conf} from '../../../conf';
+import {Config} from '../../../config';
 
-const config = new Conf();
+const config = new Config();
 
 config.argv();
 config.add('file', {

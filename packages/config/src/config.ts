@@ -16,14 +16,14 @@ import {
   PossibleMemoryOptions,
   Stores,
 } from './stores';
-import {Codec, GenericConf} from './types';
+import {Codec} from './types';
 import {merge, traverseSync} from './utils';
 
 export interface Source extends StoreOptions {
   type: string;
 }
 
-export interface ConfOptions {
+export interface ConfigOptions {
   type?: string;
   store?: StoreOptions;
   stores?: Record<string, StoreOptions>;
@@ -39,7 +39,7 @@ export type PossibleStoreOptions =
   | PossibleLiteralOptions
   | PossibleMemoryOptions;
 
-export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = ConfOptions>
+export class Config<T extends Record<string, any> = Record<string, any>, O extends ConfigOptions = ConfigOptions>
   extends Configurable<O>
   implements Iterable<[keyof T, T[keyof T]]>
 {
@@ -445,4 +445,4 @@ export class Conf<T extends GenericConf = GenericConf, O extends ConfOptions = C
   }
 }
 
-export const conf = new Conf();
+export const config = new Config();
