@@ -37,7 +37,7 @@
     "@loopback/build": "^6.4.1",
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/parse-json": "^4.0.0",
     "execa": "^5.1.1"
   },

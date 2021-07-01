@@ -23,7 +23,7 @@
     "@libit/translate": "^0.6.14",
     "individual": "^3.0.0",
     "orx": "^0.1.5",
-    "tily": "^2.7.1",
+    "tily": "^2.7.2",
     "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0"
   },
@@ -32,7 +32,7 @@
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/chalk": "^2.2.0",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/tmp": "^0.2.0",
     "tmp": "^0.2.1"
   },

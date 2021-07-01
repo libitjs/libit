@@ -26,7 +26,7 @@
     "@loopback/build": "^6.4.1",
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
-    "@types/node": "^15.12.4"
+    "@types/node": "^15.12.5"
   },
   "files": [
     "README.md",

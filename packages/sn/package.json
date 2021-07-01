@@ -41,7 +41,7 @@
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/mocha": "^8.2.2",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/tmp": "^0.2.0",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
