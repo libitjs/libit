@@ -30,11 +30,11 @@ export class Box {
   }
 
   findAsym(name?: string) {
-    return name ? this.asyms.find(a => a.id === name) : this.asyms[0];
+    return name ? this.asyms.find(a => a.id.toLowerCase() === name.toLowerCase()) : this.asyms[0];
   }
 
   findHash(name?: string) {
-    return name ? this.hashes.find(h => h.id === name) : this.hashes[0];
+    return name ? this.hashes.find(h => h.id.toLowerCase() === name.toLowerCase()) : this.hashes[0];
   }
 
   asym(name?: string): AnyAsym {
@@ -66,7 +66,7 @@ export class Box {
     const asym = this.asym(asymId);
     const privkey = asym.privateKeyGenerate();
     const pubkey = asym.publicKeyCreate(privkey);
-    return {algorithm: encodeAlgorithm(asymId, hashId), privkey, pubkey};
+    return {algorithm: encodeAlgorithm(asym.id, hashId), privkey, pubkey};
   }
 
   toKeyPair(key: Buffer, algorithm: string): KeyPair;

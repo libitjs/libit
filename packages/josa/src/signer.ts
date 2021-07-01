@@ -47,8 +47,8 @@ export class Signer {
     this.box = Box.isBox(options.box) ? options.box : new Box(options.asym, options.hash);
   }
 
-  createIdentity(): Identity {
-    const identity = <Identity>this.box.createKeyPair();
+  createIdentity(algorithm?: string): Identity {
+    const identity = <Identity>this.box.createKeyPair(algorithm);
     identity.id = base64.encodeURL(identity.pubkey);
     return identity;
   }

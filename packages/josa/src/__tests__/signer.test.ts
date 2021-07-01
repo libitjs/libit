@@ -1,26 +1,38 @@
 import {expect} from '@loopback/testlab';
 import {base64} from '@libit/crypto/encoding/base64';
+import {ed25519} from '@libit/crypto/ed25519';
+import {p256} from '@libit/crypto/p256';
 import {Identity} from '../types';
 import {Signer} from '../signer';
 
 const SAMPLE_PAYLOAD = {action: 'send'};
 
-describe('signer', function () {
+describe('signer', () => {
   let signer: Signer;
   let keypair1: Identity;
   let keypair2: Identity;
+  let keypair3: Identity;
 
   before(() => {
-    signer = new Signer();
+    signer = new Signer({
+      asym: [ed25519, p256],
+    });
     keypair1 = signer.createIdentity();
     keypair2 = signer.createIdentity();
+    keypair3 = signer.createIdentity('p256');
   });
 
-  it('keypair have string id', function () {
+  it('keypair have correct algorithm id', () => {
+    expect(keypair1.algorithm).startWith(ed25519.id);
+    expect(keypair2.algorithm).startWith(ed25519.id);
+    expect(keypair3.algorithm).startWith(p256.id);
+  });
+
+  it('keypair have string id', () => {
     expect(keypair1.id).eql(base64.encodeURL(keypair1.pubkey));
   });
 
-  it('sign sample data', function () {
+  it('sign sample data', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, keypair1);
     expect(packet).ok();
     expect(packet.header).ok();
@@ -29,18 +41,18 @@ describe('signer', function () {
     expect(packet.signatures).lengthOf(1);
   });
 
-  it('verify packet ok', function () {
+  it('verify packet ok', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, keypair1);
     expect(signer.verify(packet)).to.be.ok();
   });
 
-  it('throw error if verification failed', function () {
+  it('throw error if verification failed', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, keypair1);
     packet.payload = Math.random();
     expect(() => signer.verify(packet)).throw(/signature verification failed/);
   });
 
-  it('extract payload from token', function () {
+  it('extract payload from token', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, keypair1);
     const message = signer.verify(packet);
     expect(message).ok();
@@ -48,13 +60,13 @@ describe('signer', function () {
     expect(message.identities).eql([base64.encodeURL(keypair1.pubkey)]);
   });
 
-  it('sign with multiple identities', function () {
+  it('sign with multiple identities', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, [keypair1, keypair2]);
     expect(packet).to.be.ok();
     expect(packet.signatures).lengthOf(2);
   });
 
-  it('sign with multiple times', function () {
+  it('sign with multiple times', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, keypair1);
     expect(packet).to.be.ok();
     expect(packet.signatures).lengthOf(1);
@@ -62,7 +74,7 @@ describe('signer', function () {
     expect(packet.signatures).lengthOf(2);
   });
 
-  it('extract message from packet with multiple signatures', function () {
+  it('extract message from packet with multiple signatures', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, [keypair1, keypair2]);
     expect(signer.verify(packet)).to.containDeep({
       payload: SAMPLE_PAYLOAD,
