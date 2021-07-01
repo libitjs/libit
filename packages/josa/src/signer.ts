@@ -11,7 +11,7 @@ import {
   Identity,
   isPacket,
   KeyPair,
-  Message,
+  Ticket,
   Packet,
   Payload,
   PrivateKey,
@@ -63,7 +63,7 @@ export class Signer {
     return packet;
   }
 
-  verify(packet: Packet, options?: VerifyOptions): Message {
+  verify(packet: Packet, options?: VerifyOptions): Ticket {
     options = Object.assign({}, options);
 
     if (options.clockTimestamp && typeof options.clockTimestamp !== 'number') {

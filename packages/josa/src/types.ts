@@ -59,8 +59,8 @@ export interface Packet {
   signatures: Signature[];
 }
 
-export interface Message {
-  payload: any;
+export interface Ticket<T = any> {
+  payload: T;
   identities: string[];
 }
 
