@@ -6,11 +6,9 @@ export interface Receipt {
   digest: string;
 }
 
-export interface JOTOptions extends Partial<SignerOptions> {
-}
+export interface JOTOptions extends Partial<SignerOptions> {}
 
 export class JOT {
-
   protected signer: Signer;
   protected digester: Digester;
 
@@ -24,9 +22,13 @@ export class JOT {
   }
 
   sign(data: any, key: PrivateKey | PrivateKey[], options?: SignOptions): Packet {
-    return this.signer.sign({
-      digest: this.digester.digest(data),
-    }, key, options);
+    return this.signer.sign(
+      {
+        digest: this.digester.digest(data),
+      },
+      key,
+      options,
+    );
   }
 
   unsign(packet: Packet, options?: VerifyOptions): Ticket<Receipt> {
