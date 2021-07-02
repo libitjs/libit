@@ -1,5 +1,5 @@
 import {expect} from '@loopback/testlab';
-import jot, {JOT} from '../jot';
+import {jot, JOT} from '../jot';
 
 describe('JOT', () => {
   it('should export correctly', () => {

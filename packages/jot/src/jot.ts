@@ -58,4 +58,4 @@ export class JOT {
   }
 }
 
-export default new JOT();
+export const jot = new JOT();
