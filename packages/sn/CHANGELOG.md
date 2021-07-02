@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.8](https://gitr.net/mindary/libit/compare/@libit/sn@0.2.7...@libit/sn@0.2.8) (2021-07-02)
+
+**Note:** Version bump only for package @libit/sn
+
+
+
+
+
 ## [0.2.7](https://gitr.net/mindary/libit/compare/@libit/sn@0.2.6...@libit/sn@0.2.7) (2021-07-01)
 
 **Note:** Version bump only for package @libit/sn

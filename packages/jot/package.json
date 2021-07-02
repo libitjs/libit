@@ -1,7 +1,7 @@
 {
   "name": "@taoking/jot",
   "description": "A JSON Object Token signing utils shared for server and client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
     "verify": "npm pack && tar xf taoking-jot*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/digester": "^0.3.4",
-    "@libit/josa": "^0.3.6",
+    "@libit/digester": "^0.3.5",
+    "@libit/josa": "^0.3.7",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
