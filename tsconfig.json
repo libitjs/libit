@@ -26,6 +26,9 @@
       "path": "packages/josa/tsconfig.json"
     },
     {
+      "path": "packages/jot/tsconfig.json"
+    },
+    {
       "path": "packages/log/tsconfig.json"
     },
     {
