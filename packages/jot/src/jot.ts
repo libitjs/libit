@@ -12,8 +12,7 @@ import {
 import {Digester} from '@libit/digester';
 import {DigestibleTicket} from './types';
 
-export interface JOTOptions extends Partial<SignerOptions> {
-}
+export interface JOTOptions extends Partial<SignerOptions> {}
 
 export class JOT {
   protected signer: Signer;
