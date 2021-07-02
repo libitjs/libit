@@ -1,5 +1,5 @@
 {
-  "name": "@taoking/jot",
+  "name": "@libit/jot",
   "description": "A JSON Object Token signing utils shared for server and client",
   "version": "0.1.2",
   "keywords": [],
@@ -13,11 +13,11 @@
   "scripts": {
     "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
     "build": "lb-tsc",
-    "clean": "lb-clean taoking-jot*.tgz dist *.tsbuildinfo package",
+    "clean": "lb-clean libit-jot*.tgz dist *.tsbuildinfo package",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
     "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
-    "verify": "npm pack && tar xf taoking-jot*.tgz && tree package && npm run clean"
+    "verify": "npm pack && tar xf libit-jot*.tgz && tree package && npm run clean"
   },
   "dependencies": {
     "@libit/digester": "^0.3.5",
