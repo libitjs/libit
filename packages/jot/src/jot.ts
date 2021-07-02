@@ -1,12 +1,19 @@
-import {pack, Packet, PrivateKey, Signer, SignerOptions, SignOptions, Ticket, unpack} from '@libit/josa';
+import {
+  Identity,
+  pack,
+  Packet,
+  PrivateKey,
+  Signer,
+  SignerOptions,
+  SignOptions,
+  unpack,
+  VerifyOptions,
+} from '@libit/josa';
 import {Digester} from '@libit/digester';
-import {Identity, VerifyOptions} from '@libit/josa/src/types';
+import {DigestibleTicket} from './types';
 
-export interface Receipt {
-  digest: string;
+export interface JOTOptions extends Partial<SignerOptions> {
 }
-
-export interface JOTOptions extends Partial<SignerOptions> {}
 
 export class JOT {
   protected signer: Signer;
@@ -31,7 +38,7 @@ export class JOT {
     );
   }
 
-  unsign(packet: Packet, options?: VerifyOptions): Ticket<Receipt> {
+  unsign(packet: Packet, options?: VerifyOptions): DigestibleTicket {
     return this.signer.verify(packet, options);
   }
 
@@ -39,11 +46,11 @@ export class JOT {
     return pack(this.sign(data, key, options));
   }
 
-  unpackAndUnsign(token: string, options?: VerifyOptions): Ticket<Receipt> {
+  unpackAndUnsign(token: string, options?: VerifyOptions): DigestibleTicket {
     return this.unsign(unpack(token), options);
   }
 
-  verify(ticket: Ticket<Receipt>, data?: any): boolean {
+  verify(ticket: DigestibleTicket, data?: any): boolean {
     return this.digester.verify(data, ticket.payload.digest);
   }
 }
