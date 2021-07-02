@@ -1,7 +1,7 @@
 {
   "name": "@libit/jot",
   "description": "A JSON Object Token signing utils shared for server and client",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
