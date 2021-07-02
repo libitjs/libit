@@ -10,13 +10,13 @@ import {
   VerifyOptions,
 } from '@libit/josa';
 import {Digester} from '@libit/digester';
-import {DigestibleTicket} from './types';
+import {DigestibleTicket, isDigestibleTicket} from './types';
 
 export interface JOTOptions extends Partial<SignerOptions> {}
 
 export class JOT {
-  protected signer: Signer;
-  protected digester: Digester;
+  signer: Signer;
+  digester: Digester;
 
   constructor(options: JOTOptions = {}) {
     this.signer = new Signer(options);
@@ -38,7 +38,11 @@ export class JOT {
   }
 
   unsign(packet: Packet, options?: VerifyOptions): DigestibleTicket {
-    return this.signer.verify(packet, options);
+    const ticket = this.signer.verify(packet, options);
+    if (!isDigestibleTicket(ticket.payload)) {
+      throw new Error('JOT payload is not digestible');
+    }
+    return ticket;
   }
 
   signAndPack(data: any, key: PrivateKey | PrivateKey[], options?: SignOptions): string {

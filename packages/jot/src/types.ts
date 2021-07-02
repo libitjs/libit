@@ -5,3 +5,7 @@ export interface Digestible {
 }
 
 export type DigestibleTicket = Ticket<Digestible>;
+
+export function isDigestibleTicket(target: any): target is DigestibleTicket {
+  return !!target && typeof target.digest === 'string';
+}

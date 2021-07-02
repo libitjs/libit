@@ -7,12 +7,20 @@ describe('JOT', () => {
     expect(jot).is.instanceof(JOT);
   });
 
-  it('sign and unsign', function () {
-    const key = jot.createIdentity();
-    const packet = jot.sign('hello', key);
-    const ticket = jot.unsign(packet);
-    expect(ticket.payload).eql(packet.payload);
-    expect(ticket.identities).deepEqual([key.id]);
+  describe('sign & unsign', function () {
+    it('should sign and unsign successful', function () {
+      const key = jot.createIdentity();
+      const packet = jot.sign('hello', key);
+      const ticket = jot.unsign(packet);
+      expect(ticket.payload).eql(packet.payload);
+      expect(ticket.identities).deepEqual([key.id]);
+    });
+
+    it('should throw error when try to unsign un-digestible payload', function () {
+      const key = jot.createIdentity();
+      const packet = jot.signer.sign('hello', key);
+      expect(() => jot.unsign(packet)).throw(/not digestible/);
+    });
   });
 
   it('signAndPack and unpackAndUnsign', function () {
