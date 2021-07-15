@@ -12,6 +12,7 @@ import {
 import {Digester} from '@libit/digester';
 import {DigestibleTicket, isDigestibleTicket} from './types';
 import {HashCtor} from '@libit/crypto';
+import {Buffer} from 'buffer';
 
 export interface JOTOptions extends Partial<SignerOptions> {}
 
@@ -30,8 +31,14 @@ export class JOT {
     this.digester = new Digester(hashes);
   }
 
-  createIdentity(algorithm?: string): Identity {
-    return this.signer.createIdentity(algorithm);
+  createIdentity(algorithm?: string): Identity;
+  createIdentity(secretKey: SecretKey): Identity;
+  createIdentity(algorithmOrSecretKey?: string | SecretKey): Identity {
+    return this.signer.createIdentity(algorithmOrSecretKey as any);
+  }
+
+  createIdentityFromSeed(seed: Buffer | string, algorithm?: string) {
+    return this.signer.createIdentityFromSeed(seed, algorithm);
   }
 
   sign(data: any, key: SecretKey | SecretKey[], options?: SignOptions): Packet {
