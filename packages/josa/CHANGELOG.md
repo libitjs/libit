@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://gitr.net/mindary/libit/compare/@libit/josa@0.3.7...@libit/josa@0.3.8) (2021-07-15)
+
+**Note:** Version bump only for package @libit/josa
+
+
+
+
+
 ## [0.3.7](https://gitr.net/mindary/libit/compare/@libit/josa@0.3.6...@libit/josa@0.3.7) (2021-07-02)
 
 **Note:** Version bump only for package @libit/josa
