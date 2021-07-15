@@ -1,4 +1,4 @@
-import {ECDH} from './types/ecdh';
+import {ECDH} from './types';
 
 const x448: ECDH = require('bcrypto/lib/x448');
 
