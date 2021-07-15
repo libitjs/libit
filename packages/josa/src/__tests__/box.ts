@@ -6,6 +6,7 @@ import {p256} from '@libit/crypto/p256';
 import {SHA512} from '@libit/crypto/sha512';
 import {Box} from '../box';
 import {encodeAlgorithm} from '../utils';
+import {PrivateKey} from '../types';
 
 const message = Buffer.from('hello world');
 
@@ -23,6 +24,7 @@ describe('box', function () {
   it('should create key pair', function () {
     const keypair = box.createKeyPair();
     expect(keypair).to.be.ok();
+    expect(keypair.algorithm.split('-')).length(2);
     expect(keypair.algorithm).to.eql(encodeAlgorithm(ed25519, SHA512));
     expect(keypair.privkey).instanceof(Buffer);
     expect(keypair.pubkey).instanceof(Buffer);
@@ -68,4 +70,30 @@ describe('box', function () {
     result = box.verify(message, sig, keypair);
     expect(result).to.be.true();
   });
+
+  describe('toKeyPair', function() {
+
+    it('should return same keypair object if convert a keypair object', function() {
+      const keypair1 = box.createKeyPair(secp256k1.id);
+      const keypair2 = box.toKeyPair(keypair1);
+      expect(keypair2).equal(keypair1);
+    });
+
+    it('should convert to keypair with private key buffer', function() {
+      const keypair1 = box.createKeyPair(secp256k1.id);
+      const keypair2 = box.toKeyPair(keypair1.privkey, keypair1.algorithm);
+      expect(keypair2).deepEqual(keypair1);
+    });
+
+    it('should convert to keypair with private key', function() {
+      const keypair1 = box.createKeyPair(secp256k1.id);
+      const privkey: PrivateKey = {
+        algorithm: keypair1.algorithm,
+        privkey: keypair1.privkey,
+      }
+      const keypair2 = box.toKeyPair(privkey);
+      expect(keypair2).deepEqual(keypair1);
+    });
+  });
+
 });

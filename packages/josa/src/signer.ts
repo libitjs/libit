@@ -28,6 +28,7 @@ export interface SignerOptions {
   box: Box;
   asym: AnyAsym | AnyAsym[];
   hash: HashCtor | HashCtor[];
+  digestAlgorithm?: HashCtor; // default is SHA512
   defaultExpiresIn?: number | string;
 }
 

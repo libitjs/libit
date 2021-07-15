@@ -84,9 +84,10 @@ export class Box {
         privkey: key,
       };
     }
+    [algorithm] = decodeAlgorithm(key.algorithm);
     return {
       ...key,
-      pubkey: this.asym(key.algorithm).publicKeyCreate(key.privkey),
+      pubkey: this.asym(algorithm).publicKeyCreate(key.privkey),
     };
   }
 
