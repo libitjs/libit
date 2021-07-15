@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@libit/config": "^0.5.5",
-    "debug": "^4.3.1",
-    "i18next": "^20.3.2",
-    "orx": "^0.1.5",
+    "debug": "^4.3.2",
+    "i18next": "^20.3.3",
+    "orx": "^0.2.0",
     "os-locale": "^5.0.0",
     "tslib": "^2.3.0"
   },
@@ -33,7 +33,7 @@
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/debug": "^4.1.6",
-    "@types/node": "^15.14.0"
+    "@types/node": "^16.3.2"
   },
   "files": [
     "README.md",

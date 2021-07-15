@@ -22,7 +22,7 @@
   "dependencies": {
     "@libit/translate": "^0.6.16",
     "individual": "^3.0.0",
-    "orx": "^0.1.5",
+    "orx": "^0.2.0",
     "tily": "^2.7.2",
     "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0"
@@ -32,8 +32,8 @@
     "@loopback/eslint-config": "^10.2.1",
     "@loopback/testlab": "^3.4.1",
     "@types/chalk": "^2.2.0",
-    "@types/node": "^15.14.0",
-    "@types/tmp": "^0.2.0",
+    "@types/node": "^16.3.2",
+    "@types/tmp": "^0.2.1",
     "tmp": "^0.2.1"
   },
   "files": [
