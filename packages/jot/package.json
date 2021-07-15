@@ -20,6 +20,7 @@
     "verify": "npm pack && tar xf libit-jot*.tgz && tree package && npm run clean"
   },
   "dependencies": {
+    "@libit/crypto": "^0.2.9",
     "@libit/digester": "^0.3.5",
     "@libit/josa": "^0.3.7",
     "tslib": "^2.3.0"

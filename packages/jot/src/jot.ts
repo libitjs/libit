@@ -11,16 +11,23 @@ import {
 } from '@libit/josa';
 import {Digester} from '@libit/digester';
 import {DigestibleTicket, isDigestibleTicket} from './types';
+import {HashCtor} from '@libit/crypto';
 
 export interface JOTOptions extends Partial<SignerOptions> {}
 
 export class JOT {
   signer: Signer;
   digester: Digester;
+  digestAlgorithm: HashCtor;
 
   constructor(options: JOTOptions = {}) {
     this.signer = new Signer(options);
-    this.digester = new Digester(this.signer.box.hashes);
+    const hashes = [...this.signer.box.hashes];
+    this.digestAlgorithm = options.digestAlgorithm ?? hashes[0];
+    if (options.digestAlgorithm && !hashes.includes(options.digestAlgorithm)) {
+      hashes.push(options.digestAlgorithm);
+    }
+    this.digester = new Digester(hashes);
   }
 
   createIdentity(algorithm?: string): Identity {
@@ -30,7 +37,7 @@ export class JOT {
   sign(data: any, key: PrivateKey | PrivateKey[], options?: SignOptions): Packet {
     return this.signer.sign(
       {
-        digest: this.digester.digest(data),
+        digest: this.digester.digest(data, this.digestAlgorithm),
       },
       key,
       options,

@@ -11,6 +11,9 @@
   ],
   "references": [
     {
+      "path": "../crypto/tsconfig.json"
+    },
+    {
       "path": "../digester/tsconfig.json"
     },
     {
