@@ -48,8 +48,16 @@ export class Signer {
     this.box = Box.isBox(options.box) ? options.box : new Box(options.asym, options.hash);
   }
 
-  createIdentity(algorithm?: string): Identity {
-    const identity = <Identity>this.box.createKeyPair(algorithm);
+  createIdentity(algorithm?: string): Identity;
+  createIdentity(secretKey: SecretKey): Identity;
+  createIdentity(algorithmOrSecretKey?: string | SecretKey): Identity {
+    const identity = <Identity>this.box.createKeyPair(algorithmOrSecretKey as any);
+    identity.id = base64.encodeURL(identity.publicKey);
+    return identity;
+  }
+
+  createIdentityFromSeed(seed: Buffer | string, algorithm?: string) {
+    const identity = <Identity>this.box.createKeyPairFromSeed(seed, algorithm);
     identity.id = base64.encodeURL(identity.publicKey);
     return identity;
   }

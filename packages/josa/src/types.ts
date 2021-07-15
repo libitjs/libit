@@ -122,7 +122,7 @@ export function isKeyPair(x: any): x is KeyPair {
   return Boolean(x && typeof x.algorithm === 'string' && x.secretKey && x.publicKey);
 }
 
-export function isPrivateKey(x: any): x is SecretKey {
+export function isSecretKey(x: any): x is SecretKey {
   return Boolean(x && typeof x.algorithm === 'string' && x.secretKey);
 }
 

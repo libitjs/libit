@@ -1,31 +1,31 @@
 import {expect} from '@loopback/testlab';
-import {isPrivateKey, isPublicKey} from '../types';
+import {isSecretKey, isPublicKey} from '../types';
 
 describe('types', () => {
   it('isPrivateKey', () => {
     expect(
-      isPrivateKey({
+      isSecretKey({
         algorithm: 'a',
         secretKey: 'a',
       }),
     ).true();
 
     expect(
-      isPrivateKey({
+      isSecretKey({
         algorithm: 'a',
         publicKey: 'b',
       }),
     ).false();
 
     expect(
-      isPrivateKey({
+      isSecretKey({
         secretKey: 'a',
         publicKey: 'b',
       }),
     ).false();
 
     expect(
-      isPrivateKey({
+      isSecretKey({
         algorithm: 'a',
         secretKey: 'a',
         publicKey: 'b',

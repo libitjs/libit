@@ -4,7 +4,9 @@ import {ed25519} from '@libit/crypto/ed25519';
 import {p256} from '@libit/crypto/p256';
 import {Identity} from '../types';
 import {Signer} from '../signer';
+import {randomBytes} from 'crypto';
 
+const ASYMS = [ed25519, p256];
 const SAMPLE_PAYLOAD = {action: 'send'};
 
 describe('signer', () => {
@@ -15,7 +17,7 @@ describe('signer', () => {
 
   before(() => {
     signer = new Signer({
-      asym: [ed25519, p256],
+      asym: ASYMS,
     });
     keypair1 = signer.createIdentity();
     keypair2 = signer.createIdentity();
@@ -80,5 +82,14 @@ describe('signer', () => {
       payload: SAMPLE_PAYLOAD,
       identities: [base64.encodeURL(keypair1.publicKey), base64.encodeURL(keypair2.publicKey)],
     });
+  });
+
+  describe('createIdentityFromSeed', function() {
+    for (const asym of ASYMS) {
+      it(`should create identity from seed with "${asym}"`, function() {
+        const keypair = signer.createIdentityFromSeed(randomBytes(asym.size), asym.id);
+        expect(keypair).ok();
+      });
+    }
   });
 });

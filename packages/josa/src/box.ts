@@ -1,11 +1,16 @@
 import {Buffer} from 'buffer';
 import {HashCtor} from '@libit/crypto';
-import {AnyAsym, isKeyPair, KeyPair, SecretKey, PublicKey} from './types';
+import {AnyAsym, isKeyPair, isSecretKey, KeyPair, PublicKey, SecretKey} from './types';
 import {decodeAlgorithm, encodeAlgorithm} from './utils';
 
 export class Box {
   asyms: AnyAsym[];
   hashes: HashCtor[];
+
+  constructor(asym: AnyAsym | AnyAsym[], hash: HashCtor | HashCtor[]) {
+    this.asyms = Array.isArray(asym) ? asym : [asym];
+    this.hashes = Array.isArray(hash) ? hash : [hash];
+  }
 
   static isBox(obj: any): obj is Box {
     return (
@@ -14,11 +19,6 @@ export class Box {
       typeof obj.sign === 'function' &&
       typeof obj.verify === 'function'
     );
-  }
-
-  constructor(asym: AnyAsym | AnyAsym[], hash: HashCtor | HashCtor[]) {
-    this.asyms = Array.isArray(asym) ? asym : [asym];
-    this.hashes = Array.isArray(hash) ? hash : [hash];
   }
 
   defaultAsym() {
@@ -58,13 +58,44 @@ export class Box {
     return this.asym(asym).adsa(this.hash(hash));
   }
 
-  createKeyPair(algorithm?: string): KeyPair {
-    let [asymId, hashId] = algorithm ? decodeAlgorithm(algorithm) : [this.defaultAsym().id, this.defaultHash().id];
+  createKeyPair(algorithm?: string): KeyPair;
+  createKeyPair(secretKey: SecretKey): KeyPair;
+  createKeyPair(algorithmOrSecretKey?: string | SecretKey): KeyPair {
+    if (isSecretKey(algorithmOrSecretKey)) {
+      return this.toKeyPair(algorithmOrSecretKey);
+    }
+
+    let [asymId, hashId] = algorithmOrSecretKey
+      ? decodeAlgorithm(algorithmOrSecretKey)
+      : [this.defaultAsym().id, this.defaultHash().id];
     asymId = asymId ?? this.defaultAsym().id;
     hashId = hashId ?? this.defaultHash().id;
 
     const asym = this.asym(asymId);
     const secretKey = asym.privateKeyGenerate();
+    const publicKey = asym.publicKeyCreate(secretKey);
+    return {algorithm: encodeAlgorithm(asym.id, hashId), secretKey: secretKey, publicKey: publicKey};
+  }
+
+  createKeyPairFromSeed(seed: Buffer | string, algorithm?: string) {
+    let [asymId, hashId] = algorithm
+      ? decodeAlgorithm(algorithm)
+      : [this.defaultAsym().id, this.defaultHash().id];
+    asymId = asymId ?? this.defaultAsym().id;
+    hashId = hashId ?? this.defaultHash().id;
+
+    if (asymId === 'RSA') {
+      throw new Error('createKeyPairFromSeed dose not support RSA');
+    }
+    const asym = this.asym(asymId);
+    if (seed.length < asym.size) {
+      throw new Error(`seed length must not be less than ${asym.size}`);
+    }
+    seed = typeof seed === 'string' ? Buffer.from(seed) : seed;
+    const secretKey = this.hash(hashId).digest(seed).slice(0, asym.size);
+    if (!asym.privateKeyVerify(secretKey)) {
+      throw new Error(`createKeyPairFromSeed can not generate a valid keypair for algorithm "${asymId}"`);
+    }
     const publicKey = asym.publicKeyCreate(secretKey);
     return {algorithm: encodeAlgorithm(asym.id, hashId), secretKey: secretKey, publicKey: publicKey};
   }
