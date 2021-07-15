@@ -99,19 +99,19 @@ export interface EDDSA extends Asym<EDDSAPrivateKeyJSON, EDDSAPublicKeyJSON> {
 
   publicKeyNegate(key: Buffer): Buffer;
 
-  sign(msg: Buffer, secret: Buffer, ph: null | boolean, ctx: Buffer | null): Buffer;
+  sign(msg: Buffer, secret: Buffer, ph?: null | boolean, ctx?: Buffer | null): Buffer;
 
-  signWithScalar(msg: Buffer, scalar: Buffer, prefix: Buffer, ph: null | boolean, ctx: Buffer): Buffer;
+  signWithScalar(msg: Buffer, scalar: Buffer, prefix: Buffer, ph?: null | boolean, ctx?: Buffer): Buffer;
 
-  signTweakAdd(msg: Buffer, secret: Buffer, tweak: Buffer, ph: null | boolean, ctx: Buffer): Buffer;
+  signTweakAdd(msg: Buffer, secret: Buffer, tweak: Buffer, ph?: null | boolean, ctx?: Buffer): Buffer;
 
-  signTweakMul(msg: Buffer, secret: Buffer, tweak: Buffer, ph: null | boolean, ctx: Buffer): Buffer;
+  signTweakMul(msg: Buffer, secret: Buffer, tweak: Buffer, ph?: null | boolean, ctx?: Buffer): Buffer;
 
-  verify(msg: Buffer, sig: Buffer, key: Buffer, ph: null | boolean, ctx?: Buffer | null): boolean;
+  verify(msg: Buffer, sig: Buffer, key: Buffer, ph?: null | boolean, ctx?: Buffer | null): boolean;
 
-  verifySingle(msg: Buffer, sig: Buffer, key: Buffer, ph: null | boolean, ctx?: Buffer | null): boolean;
+  verifySingle(msg: Buffer, sig: Buffer, key: Buffer, ph?: null | boolean, ctx?: Buffer | null): boolean;
 
-  verifyBatch(batch: [Buffer, Buffer, Buffer][], ph: null | boolean, ctx?: Buffer | null): boolean;
+  verifyBatch(batch: [Buffer, Buffer, Buffer][], ph?: null | boolean, ctx?: Buffer | null): boolean;
 
   derive(pub: Buffer, secret: Buffer): Buffer;
 
