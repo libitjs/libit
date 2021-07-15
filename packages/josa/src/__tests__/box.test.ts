@@ -99,9 +99,9 @@ describe('box', function () {
     });
   });
 
-  describe('createKeyPairFromSeed', function() {
+  describe('createKeyPairFromSeed', function () {
     for (const asym of ASYMS) {
-      it(`should create keypair from seed with "${asym}"`, function() {
+      it(`should create keypair from seed with "${asym}"`, function () {
         const keypair = box.createKeyPairFromSeed(randomBytes(asym.size), asym.id);
         expect(keypair).ok();
       });

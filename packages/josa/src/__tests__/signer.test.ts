@@ -84,9 +84,9 @@ describe('signer', () => {
     });
   });
 
-  describe('createIdentityFromSeed', function() {
+  describe('createIdentityFromSeed', function () {
     for (const asym of ASYMS) {
-      it(`should create identity from seed with "${asym}"`, function() {
+      it(`should create identity from seed with "${asym}"`, function () {
         const keypair = signer.createIdentityFromSeed(randomBytes(asym.size), asym.id);
         expect(keypair).ok();
       });

@@ -78,9 +78,7 @@ export class Box {
   }
 
   createKeyPairFromSeed(seed: Buffer | string, algorithm?: string) {
-    let [asymId, hashId] = algorithm
-      ? decodeAlgorithm(algorithm)
-      : [this.defaultAsym().id, this.defaultHash().id];
+    let [asymId, hashId] = algorithm ? decodeAlgorithm(algorithm) : [this.defaultAsym().id, this.defaultHash().id];
     asymId = asymId ?? this.defaultAsym().id;
     hashId = hashId ?? this.defaultHash().id;
 
