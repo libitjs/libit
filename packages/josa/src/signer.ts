@@ -14,7 +14,7 @@ import {
   Ticket,
   Packet,
   Payload,
-  PrivateKey,
+  SecretKey,
   Signature,
   SignOptions,
   SignOptionsSchema,
@@ -50,13 +50,13 @@ export class Signer {
 
   createIdentity(algorithm?: string): Identity {
     const identity = <Identity>this.box.createKeyPair(algorithm);
-    identity.id = base64.encodeURL(identity.pubkey);
+    identity.id = base64.encodeURL(identity.publicKey);
     return identity;
   }
 
-  sign(target: Packet, key: PrivateKey | PrivateKey[]): Packet;
-  sign(target: Payload, key: PrivateKey | PrivateKey[], options?: SignOptions): Packet;
-  sign(target: Packet | Payload, key: PrivateKey | PrivateKey[], options: SignOptions = {}): Packet {
+  sign(target: Packet, key: SecretKey | SecretKey[]): Packet;
+  sign(target: Payload, key: SecretKey | SecretKey[], options?: SignOptions): Packet;
+  sign(target: Packet | Payload, key: SecretKey | SecretKey[], options: SignOptions = {}): Packet {
     const packet = this.buildPacket(target, options);
     const keys = Array.isArray(key) ? key : [key];
     const content = this.encode(packet.header, packet.payload);
@@ -90,7 +90,7 @@ export class Signer {
       .map(signature =>
         this.box.verify(this.encode(header, payload), base64.decodeURL(signature.sig), {
           algorithm: signature.alg,
-          pubkey: base64.decodeURL(signature.idt),
+          publicKey: base64.decodeURL(signature.idt),
         }),
       )
       .every(v => v);
@@ -183,7 +183,7 @@ export class Signer {
 
   protected createSignature(data: string | Buffer, keypair: KeyPair): Signature {
     return {
-      idt: base64.encodeURL(keypair.pubkey),
+      idt: base64.encodeURL(keypair.publicKey),
       alg: keypair.algorithm,
       sig: base64.encodeURL(this.box.sign(data, keypair)),
     };

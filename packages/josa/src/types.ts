@@ -18,10 +18,10 @@ export interface PublicKey {
    *
    */
   algorithm: string;
-  pubkey: Buffer;
+  publicKey: Buffer;
 }
 
-export interface PrivateKey {
+export interface SecretKey {
   /**
    * Signature algorithm.
    *
@@ -30,10 +30,10 @@ export interface PrivateKey {
    *
    */
   algorithm: string;
-  privkey: Buffer;
+  secretKey: Buffer;
 }
 
-export interface KeyPair extends PublicKey, PrivateKey {}
+export interface KeyPair extends PublicKey, SecretKey {}
 
 export interface Identity extends KeyPair {
   id: string;
@@ -119,13 +119,13 @@ export function isPacket(x: any): x is Packet {
 }
 
 export function isKeyPair(x: any): x is KeyPair {
-  return Boolean(x && typeof x.algorithm === 'string' && x.privkey && x.pubkey);
+  return Boolean(x && typeof x.algorithm === 'string' && x.secretKey && x.publicKey);
 }
 
-export function isPrivateKey(x: any): x is PrivateKey {
-  return Boolean(x && typeof x.algorithm === 'string' && x.privkey);
+export function isPrivateKey(x: any): x is SecretKey {
+  return Boolean(x && typeof x.algorithm === 'string' && x.secretKey);
 }
 
-export function isPublicKey(x: any): x is PrivateKey {
-  return Boolean(x && typeof x.algorithm === 'string' && x.pubkey);
+export function isPublicKey(x: any): x is SecretKey {
+  return Boolean(x && typeof x.algorithm === 'string' && x.publicKey);
 }

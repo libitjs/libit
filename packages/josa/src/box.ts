@@ -1,6 +1,6 @@
 import {Buffer} from 'buffer';
 import {HashCtor} from '@libit/crypto';
-import {AnyAsym, isKeyPair, KeyPair, PrivateKey, PublicKey} from './types';
+import {AnyAsym, isKeyPair, KeyPair, SecretKey, PublicKey} from './types';
 import {decodeAlgorithm, encodeAlgorithm} from './utils';
 
 export class Box {
@@ -64,14 +64,14 @@ export class Box {
     hashId = hashId ?? this.defaultHash().id;
 
     const asym = this.asym(asymId);
-    const privkey = asym.privateKeyGenerate();
-    const pubkey = asym.publicKeyCreate(privkey);
-    return {algorithm: encodeAlgorithm(asym.id, hashId), privkey, pubkey};
+    const secretKey = asym.privateKeyGenerate();
+    const publicKey = asym.publicKeyCreate(secretKey);
+    return {algorithm: encodeAlgorithm(asym.id, hashId), secretKey: secretKey, publicKey: publicKey};
   }
 
   toKeyPair(key: Buffer, algorithm: string): KeyPair;
-  toKeyPair(key: PrivateKey): KeyPair;
-  toKeyPair(key: PrivateKey | Buffer, algorithm?: string): KeyPair {
+  toKeyPair(key: SecretKey): KeyPair;
+  toKeyPair(key: SecretKey | Buffer, algorithm?: string): KeyPair {
     if (isKeyPair(key)) {
       return key;
     }
@@ -81,21 +81,21 @@ export class Box {
       }
       key = {
         algorithm,
-        privkey: key,
+        secretKey: key,
       };
     }
     [algorithm] = decodeAlgorithm(key.algorithm);
     return {
       ...key,
-      pubkey: this.asym(algorithm).publicKeyCreate(key.privkey),
+      publicKey: this.asym(algorithm).publicKeyCreate(key.secretKey),
     };
   }
 
-  sign(data: string | Buffer, key: KeyPair | PrivateKey): Buffer {
-    return this.adsa(key.algorithm).sign(data, key.privkey);
+  sign(data: string | Buffer, key: KeyPair | SecretKey): Buffer {
+    return this.adsa(key.algorithm).sign(data, key.secretKey);
   }
 
   verify(msg: string | Buffer, sig: Buffer, key: KeyPair | PublicKey): Boolean {
-    return this.adsa(key.algorithm).verify(msg, sig, key.pubkey);
+    return this.adsa(key.algorithm).verify(msg, sig, key.publicKey);
   }
 }

@@ -6,29 +6,29 @@ describe('types', () => {
     expect(
       isPrivateKey({
         algorithm: 'a',
-        privkey: 'a',
+        secretKey: 'a',
       }),
     ).true();
 
     expect(
       isPrivateKey({
         algorithm: 'a',
-        pubkey: 'b',
+        publicKey: 'b',
       }),
     ).false();
 
     expect(
       isPrivateKey({
-        privkey: 'a',
-        pubkey: 'b',
+        secretKey: 'a',
+        publicKey: 'b',
       }),
     ).false();
 
     expect(
       isPrivateKey({
         algorithm: 'a',
-        privkey: 'a',
-        pubkey: 'b',
+        secretKey: 'a',
+        publicKey: 'b',
       }),
     ).true();
   });
@@ -37,29 +37,29 @@ describe('types', () => {
     expect(
       isPublicKey({
         algorithm: 'a',
-        privkey: 'a',
+        secretKey: 'a',
       }),
     ).false();
 
     expect(
       isPublicKey({
         algorithm: 'a',
-        pubkey: 'b',
+        publicKey: 'b',
       }),
     ).true();
 
     expect(
       isPublicKey({
-        privkey: 'a',
-        pubkey: 'b',
+        secretKey: 'a',
+        publicKey: 'b',
       }),
     ).false();
 
     expect(
       isPublicKey({
         algorithm: 'a',
-        privkey: 'a',
-        pubkey: 'b',
+        secretKey: 'a',
+        publicKey: 'b',
       }),
     ).true();
   });

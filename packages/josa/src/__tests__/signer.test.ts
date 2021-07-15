@@ -29,7 +29,7 @@ describe('signer', () => {
   });
 
   it('keypair have string id', () => {
-    expect(keypair1.id).eql(base64.encodeURL(keypair1.pubkey));
+    expect(keypair1.id).eql(base64.encodeURL(keypair1.publicKey));
   });
 
   it('sign sample data', () => {
@@ -57,7 +57,7 @@ describe('signer', () => {
     const message = signer.verify(packet);
     expect(message).ok();
     expect(message.payload).ok();
-    expect(message.identities).eql([base64.encodeURL(keypair1.pubkey)]);
+    expect(message.identities).eql([base64.encodeURL(keypair1.publicKey)]);
   });
 
   it('sign with multiple identities', () => {
@@ -78,7 +78,7 @@ describe('signer', () => {
     const packet = signer.sign(SAMPLE_PAYLOAD, [keypair1, keypair2]);
     expect(signer.verify(packet)).to.containDeep({
       payload: SAMPLE_PAYLOAD,
-      identities: [base64.encodeURL(keypair1.pubkey), base64.encodeURL(keypair2.pubkey)],
+      identities: [base64.encodeURL(keypair1.publicKey), base64.encodeURL(keypair2.publicKey)],
     });
   });
 });

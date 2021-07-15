@@ -2,7 +2,7 @@ import {
   Identity,
   pack,
   Packet,
-  PrivateKey,
+  SecretKey,
   Signer,
   SignerOptions,
   SignOptions,
@@ -34,7 +34,7 @@ export class JOT {
     return this.signer.createIdentity(algorithm);
   }
 
-  sign(data: any, key: PrivateKey | PrivateKey[], options?: SignOptions): Packet {
+  sign(data: any, key: SecretKey | SecretKey[], options?: SignOptions): Packet {
     return this.signer.sign(
       {
         digest: this.digester.digest(data, this.digestAlgorithm),
@@ -52,7 +52,7 @@ export class JOT {
     return ticket;
   }
 
-  signAndPack(data: any, key: PrivateKey | PrivateKey[], options?: SignOptions): string {
+  signAndPack(data: any, key: SecretKey | SecretKey[], options?: SignOptions): string {
     return pack(this.sign(data, key, options));
   }
 

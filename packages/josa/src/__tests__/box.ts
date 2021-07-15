@@ -6,7 +6,7 @@ import {p256} from '@libit/crypto/p256';
 import {SHA512} from '@libit/crypto/sha512';
 import {Box} from '../box';
 import {encodeAlgorithm} from '../utils';
-import {PrivateKey} from '../types';
+import {SecretKey} from '../types';
 
 const message = Buffer.from('hello world');
 
@@ -26,8 +26,8 @@ describe('box', function () {
     expect(keypair).to.be.ok();
     expect(keypair.algorithm.split('-')).length(2);
     expect(keypair.algorithm).to.eql(encodeAlgorithm(ed25519, SHA512));
-    expect(keypair.privkey).instanceof(Buffer);
-    expect(keypair.pubkey).instanceof(Buffer);
+    expect(keypair.secretKey).instanceof(Buffer);
+    expect(keypair.publicKey).instanceof(Buffer);
   });
 
   it('should sign with default algo', function () {
@@ -47,8 +47,8 @@ describe('box', function () {
     const keypair = box.createKeyPair(secp256k1.id);
     expect(keypair).to.be.ok();
     expect(keypair.algorithm).to.eql(encodeAlgorithm(secp256k1, SHA512));
-    expect(keypair.privkey).instanceof(Buffer);
-    expect(keypair.pubkey).instanceof(Buffer);
+    expect(keypair.secretKey).instanceof(Buffer);
+    expect(keypair.publicKey).instanceof(Buffer);
   });
 
   it('should sign with custom algo', function () {
@@ -80,17 +80,17 @@ describe('box', function () {
 
     it('should convert to keypair with private key buffer', function () {
       const keypair1 = box.createKeyPair(secp256k1.id);
-      const keypair2 = box.toKeyPair(keypair1.privkey, keypair1.algorithm);
+      const keypair2 = box.toKeyPair(keypair1.secretKey, keypair1.algorithm);
       expect(keypair2).deepEqual(keypair1);
     });
 
     it('should convert to keypair with private key', function () {
       const keypair1 = box.createKeyPair(secp256k1.id);
-      const privkey: PrivateKey = {
+      const secretKey: SecretKey = {
         algorithm: keypair1.algorithm,
-        privkey: keypair1.privkey,
+        secretKey: keypair1.secretKey,
       };
-      const keypair2 = box.toKeyPair(privkey);
+      const keypair2 = box.toKeyPair(secretKey);
       expect(keypair2).deepEqual(keypair1);
     });
   });
