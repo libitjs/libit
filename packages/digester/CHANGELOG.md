@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://gitr.net/mindary/libit/compare/@libit/digester@0.3.6...@libit/digester@0.3.7) (2021-07-15)
+
+**Note:** Version bump only for package @libit/digester
+
+
+
+
+
 ## [0.3.6](https://gitr.net/mindary/libit/compare/@libit/digester@0.3.5...@libit/digester@0.3.6) (2021-07-15)
 
 **Note:** Version bump only for package @libit/digester

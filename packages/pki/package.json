@@ -1,7 +1,7 @@
 {
   "name": "@libit/pki",
   "description": "A JavaScript library implementing the formats that are used in PKI applications.",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "keywords": [
     "pki",
     "certificate",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@libit/bufio": "^0.2.9",
-    "@libit/crypto": "^0.2.10",
+    "@libit/crypto": "^0.2.11",
     "fast-glob": "^3.2.7",
     "tslib": "^2.3.0"
   },

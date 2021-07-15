@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.18](https://gitr.net/mindary/libit/compare/@libit/translate@0.6.17...@libit/translate@0.6.18) (2021-07-15)
+
+**Note:** Version bump only for package @libit/translate
+
+
+
+
+
 ## [0.6.17](https://gitr.net/mindary/libit/compare/@libit/translate@0.6.16...@libit/translate@0.6.17) (2021-07-15)
 
 **Note:** Version bump only for package @libit/translate
