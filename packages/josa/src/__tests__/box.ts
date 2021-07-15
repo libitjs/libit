@@ -71,29 +71,27 @@ describe('box', function () {
     expect(result).to.be.true();
   });
 
-  describe('toKeyPair', function() {
-
-    it('should return same keypair object if convert a keypair object', function() {
+  describe('toKeyPair', function () {
+    it('should return same keypair object if convert a keypair object', function () {
       const keypair1 = box.createKeyPair(secp256k1.id);
       const keypair2 = box.toKeyPair(keypair1);
       expect(keypair2).equal(keypair1);
     });
 
-    it('should convert to keypair with private key buffer', function() {
+    it('should convert to keypair with private key buffer', function () {
       const keypair1 = box.createKeyPair(secp256k1.id);
       const keypair2 = box.toKeyPair(keypair1.privkey, keypair1.algorithm);
       expect(keypair2).deepEqual(keypair1);
     });
 
-    it('should convert to keypair with private key', function() {
+    it('should convert to keypair with private key', function () {
       const keypair1 = box.createKeyPair(secp256k1.id);
       const privkey: PrivateKey = {
         algorithm: keypair1.algorithm,
         privkey: keypair1.privkey,
-      }
+      };
       const keypair2 = box.toKeyPair(privkey);
       expect(keypair2).deepEqual(keypair1);
     });
   });
-
 });
