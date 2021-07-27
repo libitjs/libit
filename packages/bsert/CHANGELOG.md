@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.10](https://gitr.net/mindary/libit/compare/@libit/bsert@0.2.9...@libit/bsert@0.2.10) (2021-07-27)
+
+**Note:** Version bump only for package @libit/bsert
+
+
+
+
+
 ## [0.2.9](https://gitr.net/mindary/libit/compare/@libit/bsert@0.2.8...@libit/bsert@0.2.9) (2021-07-15)
 
 **Note:** Version bump only for package @libit/bsert

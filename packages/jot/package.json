@@ -1,7 +1,7 @@
 {
   "name": "@libit/jot",
   "description": "A JSON Object Token signing utils shared for server and client",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,9 +20,9 @@
     "verify": "npm pack && tar xf libit-jot*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/crypto": "^0.2.11",
-    "@libit/digester": "^0.3.7",
-    "@libit/josa": "^0.3.10",
+    "@libit/crypto": "^0.2.12",
+    "@libit/digester": "^0.3.8",
+    "@libit/josa": "^0.3.11",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
