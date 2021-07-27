@@ -22,18 +22,18 @@
   "dependencies": {
     "@libit/config": "^0.5.7",
     "debug": "^4.3.2",
-    "i18next": "^20.3.3",
+    "i18next": "^20.3.5",
     "orx": "^0.2.0",
     "os-locale": "^5.0.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.14.6",
-    "@loopback/build": "^6.4.1",
-    "@loopback/eslint-config": "^10.2.1",
-    "@loopback/testlab": "^3.4.1",
-    "@types/debug": "^4.1.6",
-    "@types/node": "^16.3.2"
+    "@babel/runtime": "^7.14.8",
+    "@loopback/build": "^7.0.0",
+    "@loopback/eslint-config": "^11.0.0",
+    "@loopback/testlab": "^3.4.2",
+    "@types/debug": "^4.1.7",
+    "@types/node": "^16.4.3"
   },
   "files": [
     "README.md",
