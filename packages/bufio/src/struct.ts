@@ -1,7 +1,7 @@
 import {enforce} from './enforce';
-import {BufferReader} from './reader';
-import {BufferWriter} from './writer';
-import {StaticWriter} from './staticwriter';
+import {BufferReader} from './buffer-reader';
+import {BufferWriter} from './buffer-writer';
+import {StaticWriter} from './static-writer';
 import {custom} from './custom';
 
 /**

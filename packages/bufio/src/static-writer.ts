@@ -1,13 +1,8 @@
-/*!
- * staticwriter.js - buffer writer for bcoin
- * Copyright (c) 2014-2017, Christopher Jeffrey (MIT License).
- * https://github.com/bcoin-org/bcoin
- */
-
 import {HashLike, isHashInst} from './types';
 import {EncodingError} from './error';
 import {enforce} from './enforce';
 import * as encoding from './encoding';
+import {Writer} from './writer';
 /*
  * Constants
  */
@@ -21,7 +16,7 @@ let POOL: Buffer;
  * Statically Allocated Writer
  */
 
-export class StaticWriter {
+export class StaticWriter implements Writer {
   data: Buffer;
   offset: number;
 

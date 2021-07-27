@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import {EncodingError} from './error';
-import {BufferReader} from './reader';
-import {BufferWriter} from './writer';
-import {StaticWriter} from './staticwriter';
+import {BufferReader} from './buffer-reader';
+import {BufferWriter} from './buffer-writer';
+import {StaticWriter} from './static-writer';
 import {enforce} from './enforce';
 import * as encoding from './encoding';
-/* eslint-disable @typescript-eslint/naming-convention */
+
 export * from './custom';
 export * from './error';
 export * from './reader';
 export * from './writer';
-export * from './staticwriter';
+export * from './buffer-reader';
+export * from './buffer-writer';
+export * from './static-writer';
 export * from './struct';
 
 export {encoding};
