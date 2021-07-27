@@ -1,0 +1,6 @@
+{
+  "reject": [
+    "indent-string",
+    "escape-string-regexp"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@libit/error",
+  "description": "Custom errors",
+  "version": "0.1.0",
+  "keywords": [],
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "version": "cross-env CI=1 node scripts/prerelease.js",
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-error*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-error*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "escape-string-regexp": "^4.0.0",
+    "indent-string": "^4.0.0"
+  },
+  "devDependencies": {
+    "@loopback/build": "^7.0.0",
+    "@loopback/eslint-config": "^11.0.0",
+    "@loopback/testlab": "^3.4.2",
+    "@types/node": "^16.4.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  }
+}

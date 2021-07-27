@@ -23,6 +23,9 @@
       "path": "packages/digester/tsconfig.json"
     },
     {
+      "path": "packages/error/tsconfig.json"
+    },
+    {
       "path": "packages/josa/tsconfig.json"
     },
     {

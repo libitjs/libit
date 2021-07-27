@@ -1,0 +1,3 @@
+# @libit/error
+
+> Custom errors
