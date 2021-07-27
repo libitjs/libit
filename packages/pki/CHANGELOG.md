@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.13](https://gitr.net/mindary/libit/compare/@libit/pki@0.2.12...@libit/pki@0.2.13) (2021-07-27)
+
+**Note:** Version bump only for package @libit/pki
+
+
+
+
+
 ## [0.2.12](https://gitr.net/mindary/libit/compare/@libit/pki@0.2.11...@libit/pki@0.2.12) (2021-07-27)
 
 **Note:** Version bump only for package @libit/pki

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://gitr.net/mindary/libit/compare/@libit/bufio@0.2.10...@libit/bufio@0.3.0) (2021-07-27)
+
+
+### Features
+
+* extractor Reader and Writer interface ([04e8ea0](https://gitr.net/mindary/libit/commits/04e8ea0eaf77ce98545d66f96dba1d3d429d7e90))
+
+
+
+
+
 ## [0.2.10](https://gitr.net/mindary/libit/compare/@libit/bufio@0.2.9...@libit/bufio@0.2.10) (2021-07-27)
 
 **Note:** Version bump only for package @libit/bufio
