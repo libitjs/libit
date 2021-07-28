@@ -1,7 +1,7 @@
 {
   "name": "@libit/timer",
   "description": "Timeout and interval utilities",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
     "verify": "npm pack && tar xf libit-timer*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "@libit/error": "^0.2.0",
-    "@libit/lifecycle": "^0.1.0",
+    "@libit/error": "^0.3.0",
+    "@libit/lifecycle": "^0.2.0",
     "ts-essentials": "^7.0.2"
   },
   "devDependencies": {

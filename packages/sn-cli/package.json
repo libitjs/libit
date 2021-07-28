@@ -1,7 +1,7 @@
 {
   "name": "@libit/sn-cli",
   "description": "The sn command line tool",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "keywords": [
     "serial",
     "number",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@caporal/core": "^2.0.2",
-    "@libit/sn": "^0.2.10",
+    "@libit/sn": "^0.3.0",
     "strong-globalize": "^6.0.5"
   },
   "devDependencies": {

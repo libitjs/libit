@@ -1,7 +1,7 @@
 {
   "name": "@libit/decorators",
   "description": "Experimental decorators for common patterns.",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
