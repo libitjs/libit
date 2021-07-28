@@ -5,8 +5,7 @@ import {noop} from './utils';
 
 const MIN_INTERVAL_MS = 10;
 
-export class IntervalTimerError extends Exception {
-}
+export class IntervalTimerError extends Exception {}
 
 export type IntervalRunner = (...args: any[]) => AsyncOrSync<void>;
 
@@ -19,8 +18,7 @@ export class IntervalTimer implements IDisposable {
   private interval: number;
   private runner: IntervalRunner;
 
-  constructor(protected mode: IntervalTimerMode = 'legacy') {
-  }
+  constructor(protected mode: IntervalTimerMode = 'legacy') {}
 
   private _running = false;
 
@@ -82,11 +80,7 @@ export class IntervalTimer implements IDisposable {
       this.iterationId = 0;
       this.interval = interval;
       this.runner = runner;
-      this.timeouts[this.iterationId] = setTimeout(
-        (...a: any[]) => this.doTimeout(...a),
-        this.interval,
-        ...args,
-      );
+      this.timeouts[this.iterationId] = setTimeout((...a: any[]) => this.doTimeout(...a), this.interval, ...args);
     }
     return this;
   }
@@ -105,11 +99,7 @@ export class IntervalTimer implements IDisposable {
 
     if (this.mode === 'legacy') {
       this.iterationId = getNextIterationId(this.iterationId);
-      this.timeouts[this.iterationId] = setTimeout(
-        (...a: any[]) => this.doTimeout(...a),
-        this.interval,
-        ...args,
-      );
+      this.timeouts[this.iterationId] = setTimeout((...a: any[]) => this.doTimeout(...a), this.interval, ...args);
     }
 
     try {
@@ -123,16 +113,11 @@ export class IntervalTimer implements IDisposable {
           interval = this.interval > executionTime ? this.interval - executionTime : 0;
         }
         this.iterationId = getNextIterationId(this.iterationId);
-        this.timeouts[this.iterationId] = setTimeout(
-          (...a: any[]) => this.doTimeout(...a),
-          interval,
-          ...args,
-        );
+        this.timeouts[this.iterationId] = setTimeout((...a: any[]) => this.doTimeout(...a), interval, ...args);
       }
       delete this.promises[prevIterationId];
     }
   }
-
 }
 
 /**

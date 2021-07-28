@@ -110,27 +110,29 @@ describe('Lifecycle', () => {
     expect.strictEqual((thrownError as MultiDisposeError).errors[1].message, 'I am error 2');
   });
 
-  it('Action bar has broken accessibility #100273', function() {
-    const array = [{
-      dispose() {
+  it('Action bar has broken accessibility #100273', function () {
+    const array = [
+      {
+        dispose() {},
       },
-    }, {
-      dispose() {
+      {
+        dispose() {},
       },
-    }];
+    ];
     const array2 = dispose(array);
 
     expect(array.length).equal(2);
     expect(array2.length).equal(0);
     expect(array !== array2).ok();
 
-    const set = new Set<IDisposable>([{
-      dispose() {
+    const set = new Set<IDisposable>([
+      {
+        dispose() {},
       },
-    }, {
-      dispose() {
+      {
+        dispose() {},
       },
-    }]);
+    ]);
     const setValues = set.values();
     const setValues2 = dispose(setValues);
     expect(setValues === setValues2).ok();

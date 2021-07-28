@@ -43,10 +43,16 @@
     "pretest": "npm run clean && npm run build",
     "test": "lb-nyc npm run mocha",
     "test:ci": "lb-nyc npm run mocha",
-    "mocha": "lb-mocha --lang en_US.UTF-8 \"packages/*/dist/__tests__/**/*.test.js\" \"examples/*/dist/__tests__/**/*.test.js\"",
+    "mocha": "lb-mocha --require test/babel.js --lang en_US.UTF-8 \"packages/*/dist/__tests__/**/*.test.js\" \"examples/*/dist/__tests__/**/*.test.js\"",
     "posttest": "npm run lint"
   },
   "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.14.8",
+    "@babel/plugin-transform-runtime": "7.14.5",
+    "@babel/polyfill": "7.10.4",
+    "@babel/preset-env": "7.14.8",
+    "@babel/register": "7.14.5",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@commitlint/travis-cli": "^13.1.0",

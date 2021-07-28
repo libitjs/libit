@@ -2,9 +2,7 @@ import {expect} from '@loopback/testlab';
 import {MixinTarget} from '../mixin-target';
 
 class Application {
-  start() {
-
-  }
+  start() {}
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -24,7 +22,7 @@ class GreetingApplication extends MixinGreeting(Application) {
 }
 
 describe('MixinTarget', () => {
-  it('should work', function() {
+  it('should work', function () {
     const app = new GreetingApplication();
     expect(app.start).is.type('function');
     expect(app.greet('Joe')).equal('Hello Joe, Good Evening');

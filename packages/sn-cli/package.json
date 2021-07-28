@@ -37,8 +37,7 @@
   "dependencies": {
     "@caporal/core": "^2.0.2",
     "@libit/sn": "^0.2.10",
-    "strong-globalize": "^6.0.5",
-    "tslib": "^2.3.0"
+    "strong-globalize": "^6.0.5"
   },
   "devDependencies": {
     "@loopback/build": "^7.0.0",

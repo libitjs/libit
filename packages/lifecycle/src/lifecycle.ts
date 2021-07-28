@@ -41,37 +41,39 @@ export function setDisposableTracker(tracker: IDisposableTracker | null): void {
 if (TRACK_DISPOSABLES) {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const __is_disposable_tracked__ = '__is_disposable_tracked__';
-  setDisposableTracker(new class implements IDisposableTracker {
-    trackDisposable(x: IDisposable): void {
-      const stack = new Error('Potentially leaked disposable').stack!;
-      setTimeout(() => {
-        if (!(x as any)[__is_disposable_tracked__]) {
-          console.log(stack);
-        }
-      }, 3000);
-    }
+  setDisposableTracker(
+    new (class implements IDisposableTracker {
+      trackDisposable(x: IDisposable): void {
+        const stack = new Error('Potentially leaked disposable').stack!;
+        setTimeout(() => {
+          if (!(x as any)[__is_disposable_tracked__]) {
+            console.log(stack);
+          }
+        }, 3000);
+      }
 
-    setParent(child: IDisposable, parent: IDisposable | null): void {
-      if (child && child !== Disposable.None) {
-        try {
-          (child as any)[__is_disposable_tracked__] = true;
-        } catch {
-          // noop
+      setParent(child: IDisposable, parent: IDisposable | null): void {
+        if (child && child !== Disposable.None) {
+          try {
+            (child as any)[__is_disposable_tracked__] = true;
+          } catch {
+            // noop
+          }
         }
       }
-    }
 
-    markAsDisposed(disposable: IDisposable): void {
-      if (disposable && disposable !== Disposable.None) {
-        try {
-          (disposable as any)[__is_disposable_tracked__] = true;
-        } catch {
-          // noop
+      markAsDisposed(disposable: IDisposable): void {
+        if (disposable && disposable !== Disposable.None) {
+          try {
+            (disposable as any)[__is_disposable_tracked__] = true;
+          } catch {
+            // noop
+          }
         }
       }
-    }
-    markAsSingleton(disposable: IDisposable): void { }
-  });
+      markAsSingleton(disposable: IDisposable): void {}
+    })(),
+  );
 }
 
 function trackDisposable<T extends IDisposable>(x: T): T {
@@ -105,9 +107,7 @@ export function markAsSingleton<T extends IDisposable>(singleton: T): T {
 }
 
 export class MultiDisposeError extends Error {
-  constructor(
-    public readonly errors: any[]
-  ) {
+  constructor(public readonly errors: any[]) {
     super(`Encountered errors while disposing of store. Errors: [${errors.join(', ')}]`);
   }
 }
@@ -122,7 +122,9 @@ export function isDisposable<E extends object>(thing: E): thing is E & IDisposab
 
 export function dispose<T extends IDisposable>(disposable: T): T;
 export function dispose<T extends IDisposable>(disposable: T | undefined): T | undefined;
-export function dispose<T extends IDisposable, A extends IterableIterator<T> = IterableIterator<T>>(disposables: IterableIterator<T>): A;
+export function dispose<T extends IDisposable, A extends IterableIterator<T> = IterableIterator<T>>(
+  disposables: IterableIterator<T>,
+): A;
 export function dispose<T extends IDisposable>(disposables: Array<T>): Array<T>;
 export function dispose<T extends IDisposable>(disposables: ReadonlyArray<T>): ReadonlyArray<T>;
 export function dispose<T extends IDisposable>(arg: T | IterableIterator<T> | undefined): any {
@@ -152,7 +154,6 @@ export function dispose<T extends IDisposable>(arg: T | IterableIterator<T> | un
   }
 }
 
-
 export function combinedDisposable(...disposables: IDisposable[]): IDisposable {
   const parent = toDisposable(() => dispose(disposables));
   setParentOfDisposables(disposables, parent);
@@ -164,13 +165,12 @@ export function toDisposable(fn: () => void): IDisposable {
     dispose: once(() => {
       markAsDisposed(self);
       fn();
-    })
+    }),
   });
   return self;
 }
 
 export class DisposableStore implements IDisposable {
-
   static DISABLE_DISPOSED_WARNING = false;
 
   private _toDispose = new Set<IDisposable>();
@@ -217,7 +217,11 @@ export class DisposableStore implements IDisposable {
     setParentOfDisposable(o, this);
     if (this._isDisposed) {
       if (!DisposableStore.DISABLE_DISPOSED_WARNING) {
-        console.warn(new Error('Trying to add a disposable to a DisposableStore that has already been disposed of. The added object will be leaked!').stack);
+        console.warn(
+          new Error(
+            'Trying to add a disposable to a DisposableStore that has already been disposed of. The added object will be leaked!',
+          ).stack,
+        );
       }
     } else {
       this._toDispose.add(o);
@@ -228,8 +232,7 @@ export class DisposableStore implements IDisposable {
 }
 
 export abstract class Disposable implements IDisposable {
-
-  static readonly None = Object.freeze<IDisposable>({ dispose() { } });
+  static readonly None = Object.freeze<IDisposable>({dispose() {}});
 
   private readonly _store = new DisposableStore();
 
@@ -308,12 +311,9 @@ export class MutableDisposable<T extends IDisposable> implements IDisposable {
 }
 
 export class RefCountedDisposable {
-
   private _counter = 1;
 
-  constructor(
-    private readonly _disposable: IDisposable,
-  ) { }
+  constructor(private readonly _disposable: IDisposable) {}
 
   acquire() {
     this._counter++;
@@ -333,18 +333,17 @@ export interface IReference<T> extends IDisposable {
 }
 
 export abstract class ReferenceCollection<T> {
-
-  private readonly references: Map<string, { readonly object: T; counter: number; }> = new Map();
+  private readonly references: Map<string, {readonly object: T; counter: number}> = new Map();
 
   acquire(key: string, ...args: any[]): IReference<T> {
     let reference = this.references.get(key);
 
     if (!reference) {
-      reference = { counter: 0, object: this.createReferencedObject(key, ...args) };
+      reference = {counter: 0, object: this.createReferencedObject(key, ...args)};
       this.references.set(key, reference);
     }
 
-    const { object } = reference;
+    const {object} = reference;
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const dispose = once(() => {
       if (--reference!.counter === 0) {
@@ -355,7 +354,7 @@ export abstract class ReferenceCollection<T> {
 
     reference.counter++;
 
-    return { object, dispose };
+    return {object, dispose};
   }
 
   protected abstract createReferencedObject(key: string, ...args: any[]): T;
@@ -367,8 +366,7 @@ export abstract class ReferenceCollection<T> {
  * references are disposed whenever promises get rejected.
  */
 export class AsyncReferenceCollection<T> {
-
-  constructor(private referenceCollection: ReferenceCollection<Promise<T>>) { }
+  constructor(private referenceCollection: ReferenceCollection<Promise<T>>) {}
 
   async acquire(key: string, ...args: any[]): Promise<IReference<T>> {
     const ref = this.referenceCollection.acquire(key, ...args);
@@ -378,7 +376,7 @@ export class AsyncReferenceCollection<T> {
 
       return {
         object,
-        dispose: () => ref.dispose()
+        dispose: () => ref.dispose(),
       };
     } catch (error) {
       ref.dispose();
@@ -388,6 +386,8 @@ export class AsyncReferenceCollection<T> {
 }
 
 export class ImmortalReference<T> implements IReference<T> {
-  constructor(public object: T) { }
-  dispose(): void { /* noop */ }
+  constructor(public object: T) {}
+  dispose(): void {
+    /* noop */
+  }
 }

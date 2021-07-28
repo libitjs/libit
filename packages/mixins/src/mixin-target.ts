@@ -1,9 +1,7 @@
 /**
  * A class constructor accepting arbitrary arguments.
  */
-export type Constructor<T> =
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (...args: any[]) => T;
+export type Constructor<T> = new (...args: any[]) => T;
 
 /**
  * A replacement for `typeof Target` to be used in mixin class definitions.
@@ -68,4 +66,4 @@ export type MixinTarget<T extends object> = Constructor<
     //   may not be private or protected.ts(4094)
     [P in keyof T]: T[P];
   }
-  >;
+>;

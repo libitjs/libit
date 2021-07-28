@@ -29,8 +29,7 @@
   "dependencies": {
     "@libit/bufio": "^0.3.0",
     "@libit/crypto": "^0.2.13",
-    "fast-glob": "^3.2.7",
-    "tslib": "^2.3.0"
+    "fast-glob": "^3.2.7"
   },
   "devDependencies": {
     "@libit/bsert": "^0.2.10",

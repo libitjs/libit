@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "@libit/crypto": "^0.2.13",
-    "buffer": "^6.0.3",
-    "tslib": "^2.3.0"
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@loopback/build": "^7.0.0",

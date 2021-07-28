@@ -29,7 +29,6 @@ export class TimeoutTimer implements IDisposable {
 
   cancelAndSet(runner: () => AsyncOrSync<void>, timeout: number): void {
     this.cancel();
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.setIfNotSet(runner, timeout);
   }
 
