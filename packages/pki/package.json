@@ -38,7 +38,7 @@
     "@loopback/eslint-config": "^11.0.0",
     "@loopback/testlab": "^3.4.2",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.4.3",
+    "@types/node": "^16.4.5",
     "cpx2": "^3.0.0"
   },
   "files": [
