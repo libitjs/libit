@@ -23,7 +23,7 @@
     "@libit/translate": "^0.6.20",
     "individual": "^3.0.0",
     "orx": "^0.2.0",
-    "tily": "^2.7.3",
+    "tily": "^2.8.3",
     "ts-essentials": "^7.0.2",
     "tslib": "^2.3.0"
   },
