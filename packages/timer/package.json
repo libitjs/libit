@@ -1,0 +1,48 @@
+{
+  "name": "@libit/timer",
+  "description": "Timeout and interval utilities",
+  "version": "0.1.0",
+  "keywords": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-timer*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --require test/babel.js --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --require test/babel.js --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-timer*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "@libit/error": "^0.2.0",
+    "@libit/lifecycle": "^0.1.0",
+    "ts-essentials": "^7.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.14.8",
+    "@babel/plugin-transform-runtime": "7.14.5",
+    "@babel/polyfill": "7.10.4",
+    "@babel/preset-env": "7.14.8",
+    "@babel/register": "7.14.5",
+    "@loopback/build": "^7.0.0",
+    "@loopback/eslint-config": "^11.0.0",
+    "@loopback/testlab": "^3.4.2",
+    "@types/bluebird": "^3.5.36",
+    "@types/node": "^16.4.5",
+    "bluebird": "^3.7.2",
+    "delay": "^5.0.0"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ]
+}

@@ -32,7 +32,13 @@
       "path": "packages/jot/tsconfig.json"
     },
     {
+      "path": "packages/lifecycle/tsconfig.json"
+    },
+    {
       "path": "packages/log/tsconfig.json"
+    },
+    {
+      "path": "packages/mixins/tsconfig.json"
     },
     {
       "path": "packages/pkginfo/tsconfig.json"
@@ -45,6 +51,9 @@
     },
     {
       "path": "packages/sn/tsconfig.json"
+    },
+    {
+      "path": "packages/timer/tsconfig.json"
     },
     {
       "path": "packages/translate/tsconfig.json"

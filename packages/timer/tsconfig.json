@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "@loopback/build/config/tsconfig.common.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": [
+    "src",
+    "src/__tests__/**/*.json"
+  ],
+  "references": [
+    {
+      "path": "../error/tsconfig.json"
+    },
+    {
+      "path": "../lifecycle/tsconfig.json"
+    }
+  ]
+}
