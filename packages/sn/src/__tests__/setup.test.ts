@@ -8,20 +8,30 @@ import {resolveCacheFilePath} from '../sn';
 
 describe('setup', function () {
   let restorePlatform: Function;
-  let stub: sinon.SinonStub | undefined;
-
   let tmpobj: DirResult;
+  let stub: sinon.SinonStub;
+  const stubConsole: {
+    error: sinon.SinonStub;
+    log: sinon.SinonStub;
+    info: sinon.SinonStub;
+  } = {} as any;
 
   beforeEach(() => {
     restorePlatform = stubPlatform('linux');
     tmpobj = tmp.dirSync();
+
+    stubConsole.error = sinon.stub(console, 'error');
+    stubConsole.log = sinon.stub(console, 'log');
+    stubConsole.info = sinon.stub(console, 'info');
   });
 
   afterEach(() => {
     restorePlatform();
-    stub?.restore();
-    stub = undefined;
     fs.removeSync(tmpobj.name);
+    stub?.restore();
+    stubConsole.error?.restore();
+    stubConsole.log?.restore();
+    stubConsole.info?.restore();
   });
 
   it('should setup without sudo', async function () {
@@ -36,7 +46,7 @@ describe('setup', function () {
     });
 
     const errors: string[] = [];
-    const stubError = sinon.stub(console, 'error').callsFake(message => {
+    const stubError = stubConsole.error.callsFake(message => {
       errors.push(message);
     });
 
@@ -57,7 +67,7 @@ describe('setup', function () {
       return <any>{stdout: 'foo'};
     });
     const infos: string[] = [];
-    const stubInfo = sinon.stub(console, 'info').callsFake(message => {
+    const stubInfo = stubConsole.info.callsFake(message => {
       infos.push(message);
     });
 
@@ -83,7 +93,7 @@ describe('setup', function () {
     });
 
     const errors: string[] = [];
-    const stubError = sinon.stub(console, 'error').callsFake(message => {
+    const stubError = stubConsole.error.callsFake(message => {
       errors.push(message);
     });
 
@@ -105,7 +115,7 @@ describe('setup', function () {
     });
 
     const errors: string[] = [];
-    const stubError = sinon.stub(console, 'error').callsFake(message => {
+    const stubError = stubConsole.error.callsFake(message => {
       errors.push(message);
     });
 
