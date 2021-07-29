@@ -35,7 +35,7 @@
     "@loopback/eslint-config": "^11.0.0",
     "@loopback/testlab": "^3.4.2",
     "@types/bluebird": "^3.5.36",
-    "@types/node": "^16.4.5",
+    "@types/node": "^16.4.6",
     "bluebird": "^3.7.2",
     "delay": "^5.0.0"
   },

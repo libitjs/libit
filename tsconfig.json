@@ -5,31 +5,16 @@
   },
   "references": [
     {
-      "path": "packages/bsert/tsconfig.json"
-    },
-    {
       "path": "packages/bufio/tsconfig.json"
     },
     {
       "path": "packages/config/tsconfig.json"
     },
     {
-      "path": "packages/crypto/tsconfig.json"
-    },
-    {
       "path": "packages/decorators/tsconfig.json"
     },
     {
-      "path": "packages/digester/tsconfig.json"
-    },
-    {
       "path": "packages/error/tsconfig.json"
-    },
-    {
-      "path": "packages/josa/tsconfig.json"
-    },
-    {
-      "path": "packages/jot/tsconfig.json"
     },
     {
       "path": "packages/lifecycle/tsconfig.json"
@@ -42,9 +27,6 @@
     },
     {
       "path": "packages/pkginfo/tsconfig.json"
-    },
-    {
-      "path": "packages/pki/tsconfig.json"
     },
     {
       "path": "packages/sn-cli/tsconfig.json"
