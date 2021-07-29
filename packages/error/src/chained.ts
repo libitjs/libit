@@ -1,7 +1,9 @@
 import {cleanStack} from './clean-stack';
 import {Exception} from './exception';
+import {ErrorLike, isErrorLike} from './types';
+import {toError} from './utils';
 
-export type Cause = Error | string;
+export type Cause = ErrorLike;
 
 export interface ChainedErrorOptions {
   cleanStack?: boolean;
@@ -13,22 +15,16 @@ export class ChainedError extends Exception {
   constructor(messageOrCause: Cause, options?: ChainedErrorOptions);
   constructor(message: string, cause?: Cause, options?: ChainedErrorOptions);
   constructor(message: string | Cause, cause?: Cause | ChainedErrorOptions, options?: ChainedErrorOptions) {
+    super();
     let inner: any;
-    if (message instanceof Error) {
-      inner = cause = message;
-      super(cause.message);
-    } else if (cause) {
-      super(message);
-      if (typeof cause === 'string' || cause instanceof Error) {
-        inner = cause;
-      } else {
-        options = cause;
-        cause = undefined;
-        inner = cause;
+    if (isErrorLike(cause)) {
+      inner = toError(cause);
+      this.message = message as string;
+    } else if (isErrorLike(message)) {
+      if (typeof message !== 'string') {
+        inner = toError(message);
       }
-    } else {
-      super(message);
-      inner = message;
+      this.message = typeof message === 'string' ? message : message.message!;
     }
 
     this.stack = appendToStack(this.stack, cause, options);
