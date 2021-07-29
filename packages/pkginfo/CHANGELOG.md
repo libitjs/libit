@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://gitr.net/mindary/libit/compare/@libit/pkginfo@0.4.0...@libit/pkginfo@0.4.1) (2021-07-29)
+
+**Note:** Version bump only for package @libit/pkginfo
+
+
+
+
+
 # [0.4.0](https://gitr.net/mindary/libit/compare/@libit/pkginfo@0.3.8...@libit/pkginfo@0.4.0) (2021-07-28)
 
 

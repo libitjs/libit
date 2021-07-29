@@ -1,7 +1,7 @@
 {
   "name": "@libit/config",
   "description": "A Hierarchical node.js configuration library with files, environment variables, command-line arguments, and atomic object merging.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

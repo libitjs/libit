@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://gitr.net/mindary/libit/compare/@libit/config@0.6.0...@libit/config@0.6.1) (2021-07-29)
+
+**Note:** Version bump only for package @libit/config
+
+
+
+
+
 # [0.6.0](https://gitr.net/mindary/libit/compare/@libit/config@0.5.9...@libit/config@0.6.0) (2021-07-28)
 
 

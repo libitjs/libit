@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://gitr.net/mindary/libit/compare/@libit/timer@0.2.0...@libit/timer@0.2.1) (2021-07-29)
+
+**Note:** Version bump only for package @libit/timer
+
+
+
+
+
 # 0.2.0 (2021-07-28)
 
 
