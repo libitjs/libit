@@ -1,7 +1,7 @@
 {
   "name": "@libit/timer",
   "description": "Timeout and interval utilities",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
