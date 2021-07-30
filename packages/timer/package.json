@@ -11,6 +11,7 @@
   "author": "Mindary",
   "license": "MIT",
   "scripts": {
+    "version": "cross-env CI=1 node scripts/prerelease.js",
     "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
     "build": "lb-tsc",
     "clean": "lb-clean libit-timer*.tgz dist *.tsbuildinfo package",
@@ -41,11 +42,11 @@
   },
   "files": [
     "README.md",
-    "dist",
-    "src",
+    "**",
     "!*/__tests__"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist"
   }
 }
