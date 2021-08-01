@@ -9,9 +9,10 @@
   "author": "Mindary",
   "license": "MIT",
   "scripts": {
-    "version": "cross-env CI=1 node scripts/prerelease.js",
+    "version": "npm run dist",
+    "dist": "cross-env CI=1 node scripts/prerelease.js",
     "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
-    "build": "lb-tsc",
+    "build": "lb-tsc && npm run dist",
     "clean": "lb-clean libit-error*.tgz dist *.tsbuildinfo package",
     "pretest": "npm run clean && npm run build",
     "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
