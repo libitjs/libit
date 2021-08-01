@@ -11,6 +11,8 @@ export type IntervalRunner = (...args: any[]) => AsyncOrSync<void>;
 
 export type IntervalTimerMode = 'legacy' | 'dynamic' | 'fixed';
 
+const DEFAULT_MODE = 'dynamic';
+
 export class IntervalTimer implements IDisposable {
   private timeouts: Record<number, any> = {};
   private promises: Record<number, Promise<any>> = {};
@@ -18,7 +20,7 @@ export class IntervalTimer implements IDisposable {
   private interval: number;
   private runner: IntervalRunner;
 
-  constructor(protected mode: IntervalTimerMode = 'legacy') {}
+  constructor(protected mode: IntervalTimerMode = DEFAULT_MODE) {}
 
   private _running = false;
 
@@ -27,15 +29,13 @@ export class IntervalTimer implements IDisposable {
   }
 
   static start(runner: IntervalRunner, interval: number, ...args: any[]): IntervalTimer;
-
   static start(mode: IntervalTimerMode, runner: IntervalRunner, interval: number, ...args: any[]): IntervalTimer;
-
   static start(mode: any, runner: any, interval: any, ...args: any[]) {
     if (typeof mode === 'function') {
-      args = interval;
+      args = interval ?? [];
       interval = runner;
       runner = mode;
-      mode = 'fixed';
+      mode = DEFAULT_MODE;
     }
     return new IntervalTimer(mode).start(runner, interval, ...args);
   }

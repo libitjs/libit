@@ -6,62 +6,75 @@ import path from 'path';
 import {IntervalTimer, IntervalTimerMode} from '../../interval';
 import {fixturePath} from '../support';
 
-describe('IntervalTimer', function () {
-  testWithMode('dynamic');
-  testWithMode('fixed');
-  testWithMode('legacy');
+describe('IntervalTimer', function() {
+  const OriginalPromise = Promise;
+  let clock: sinon.SinonFakeTimers;
 
-  function testWithMode(mode: IntervalTimerMode) {
-    describe(`mode - ${mode}`, function () {
-      const OriginalPromise = Promise;
-      let clock: sinon.SinonFakeTimers;
+  beforeEach(async () => {
+    // lolex fake clock
+    clock = sinon.useFakeTimers();
+    // eslint-disable-next-line no-global-assign
+    Promise = BluebirdPromise as any;
+    BluebirdPromise.setScheduler(fn => fn());
+  });
 
-      beforeEach(async () => {
-        // lolex fake clock
-        clock = sinon.useFakeTimers();
-        // eslint-disable-next-line no-global-assign
-        Promise = BluebirdPromise as any;
-        BluebirdPromise.setScheduler(fn => fn());
-      });
+  afterEach(async () => {
+    clock.restore();
+    // eslint-disable-next-line no-global-assign
+    Promise = OriginalPromise;
+  });
 
-      afterEach(async () => {
-        clock.restore();
-        // eslint-disable-next-line no-global-assign
-        Promise = OriginalPromise;
-      });
-
-      it('should start and stop successfully with a synchronous handler', async () => {
-        const timer = new IntervalTimer(mode);
-        timer.start(() => {}, 1000);
-        await timer.stop();
-      });
-
-      it('should start and stop successfully with an asynchronous handler', async () => {
-        const timer = new IntervalTimer(mode);
-        timer.start(async () => {}, 1000);
-        await timer.stop();
-      });
-
-      it('should continue running even if an error occurs during execution', async () => {
-        let actualCount = 0;
-        const timer = new IntervalTimer(mode).start(async () => {
-          actualCount = actualCount + 1;
-          throw new Error('Some error.');
-        }, 1000);
-
-        clock.runToLast();
-        clock.runToLast();
-
-        await timer.stop();
-        expect(actualCount).equal(2);
-      });
-
-      describe('fixtures', () => {
-        runFixturesFromResource(mode, path.join(mode, 'execution-time-lt-interval.json'), () => clock);
-        runFixturesFromResource(mode, path.join(mode, 'execution-time-gt-interval.json'), () => clock);
-      });
+  describe('start', () => {
+    it('should create with static start', async () => {
+      const timer = IntervalTimer.start(() => {
+      }, 1000);
+      await timer.stop();
     });
-  }
+  });
+
+  describe('common suite', function() {
+
+    testWithMode('dynamic');
+    testWithMode('fixed');
+    testWithMode('legacy');
+
+    function testWithMode(mode: IntervalTimerMode) {
+      describe(`mode - ${mode}`, function() {
+        it('should start and stop successfully with a synchronous handler', async () => {
+          const timer = new IntervalTimer(mode);
+          timer.start(() => {
+          }, 1000);
+          await timer.stop();
+        });
+
+        it('should start and stop successfully with an asynchronous handler', async () => {
+          const timer = new IntervalTimer(mode);
+          timer.start(async () => {
+          }, 1000);
+          await timer.stop();
+        });
+
+        it('should continue running even if an error occurs during execution', async () => {
+          let actualCount = 0;
+          const timer = new IntervalTimer(mode).start(async () => {
+            actualCount = actualCount + 1;
+            throw new Error('Some error.');
+          }, 1000);
+
+          clock.runToLast();
+          clock.runToLast();
+
+          await timer.stop();
+          expect(actualCount).equal(2);
+        });
+
+        describe('fixtures', () => {
+          runFixturesFromResource(mode, path.join(mode, 'execution-time-lt-interval.json'), () => clock);
+          runFixturesFromResource(mode, path.join(mode, 'execution-time-gt-interval.json'), () => clock);
+        });
+      });
+    }
+  });
 });
 
 function runFixturesFromResource(
