@@ -1,7 +1,7 @@
 {
   "name": "@libit/error",
   "description": "Custom errors",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "keywords": [],
   "engines": {
     "node": ">=14"
