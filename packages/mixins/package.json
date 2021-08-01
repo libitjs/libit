@@ -1,7 +1,7 @@
 {
   "name": "@libit/mixins",
   "description": "A mixin utilities for typescript",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "keywords": [],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
