@@ -31,7 +31,7 @@
     "verify": "npm pack && tar xf libit-sn*.tgz && tree package && npm run clean"
   },
   "dependencies": {
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "execa": "^5.1.1",
     "fs-extra": "^10.0.0"
   },
@@ -40,7 +40,7 @@
     "@loopback/eslint-config": "^11.0.0",
     "@loopback/testlab": "^3.4.2",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^16.4.6",
+    "@types/node": "^16.4.10",
     "@types/tmp": "^0.2.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",

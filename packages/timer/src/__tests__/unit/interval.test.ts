@@ -6,7 +6,7 @@ import path from 'path';
 import {IntervalTimer, IntervalTimerMode} from '../../interval';
 import {fixturePath} from '../support';
 
-describe('IntervalTimer', function() {
+describe('IntervalTimer', function () {
   const OriginalPromise = Promise;
   let clock: sinon.SinonFakeTimers;
 
@@ -26,31 +26,27 @@ describe('IntervalTimer', function() {
 
   describe('start', () => {
     it('should create with static start', async () => {
-      const timer = IntervalTimer.start(() => {
-      }, 1000);
+      const timer = IntervalTimer.start(() => {}, 1000);
       await timer.stop();
     });
   });
 
-  describe('common suite', function() {
-
+  describe('common suite', function () {
     testWithMode('dynamic');
     testWithMode('fixed');
     testWithMode('legacy');
 
     function testWithMode(mode: IntervalTimerMode) {
-      describe(`mode - ${mode}`, function() {
+      describe(`mode - ${mode}`, function () {
         it('should start and stop successfully with a synchronous handler', async () => {
           const timer = new IntervalTimer(mode);
-          timer.start(() => {
-          }, 1000);
+          timer.start(() => {}, 1000);
           await timer.stop();
         });
 
         it('should start and stop successfully with an asynchronous handler', async () => {
           const timer = new IntervalTimer(mode);
-          timer.start(async () => {
-          }, 1000);
+          timer.start(async () => {}, 1000);
           await timer.stop();
         });
 
