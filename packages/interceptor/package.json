@@ -2,7 +2,12 @@
   "name": "@libit/interceptor",
   "description": "An interceptor library to provide a simple middleware framework",
   "version": "0.2.0",
-  "keywords": [],
+  "keywords": [
+    "intercept",
+    "interceptor",
+    "interceptors",
+    "middleware"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -35,5 +40,8 @@
     "dist",
     "src",
     "!*/__tests__"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
