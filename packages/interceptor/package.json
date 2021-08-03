@@ -1,7 +1,7 @@
 {
   "name": "@libit/interceptor",
   "description": "An interceptor library to provide a simple middleware framework",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "keywords": [
     "intercept",
     "interceptor",
