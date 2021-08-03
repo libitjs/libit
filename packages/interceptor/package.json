@@ -1,0 +1,39 @@
+{
+  "name": "@libit/interceptor",
+  "description": "An interceptor library to provide a simple middleware framework",
+  "version": "0.1.0",
+  "keywords": [],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Mindary",
+  "license": "MIT",
+  "scripts": {
+    "acceptance": "lb-mocha \"dist/__tests__/acceptance/**/*.js\"",
+    "build": "lb-tsc",
+    "clean": "lb-clean libit-interceptor*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run clean && npm run build",
+    "test": "lb-mocha --allow-console-logs  \"dist/__tests__/**/*.js\"",
+    "unit": "lb-mocha --allow-console-logs  \"dist/__tests__/unit/**/*.js\"",
+    "verify": "npm pack && tar xf libit-interceptor*.tgz && tree package && npm run clean"
+  },
+  "dependencies": {
+    "debug": "^4.3.2",
+    "ts-essentials": "^7.0.3"
+  },
+  "devDependencies": {
+    "@loopback/build": "^7.0.0",
+    "@loopback/eslint-config": "^11.0.0",
+    "@loopback/testlab": "^3.4.2",
+    "@types/debug": "^4.1.7",
+    "@types/node": "^16.4.10"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ]
+}

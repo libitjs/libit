@@ -17,6 +17,9 @@
       "path": "packages/error/tsconfig.json"
     },
     {
+      "path": "packages/interceptor/tsconfig.json"
+    },
+    {
       "path": "packages/lifecycle/tsconfig.json"
     },
     {
