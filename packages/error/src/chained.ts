@@ -29,7 +29,7 @@ export class ChainedError extends Exception {
       this.message = cause.message;
     }
 
-    this.stack = appendToStack(this.stack, causeOrOptions, options);
+    this.stack = appendToStack(this.stack, cause, options);
 
     Object.defineProperty(this, 'cause', {
       value: cause,
