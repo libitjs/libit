@@ -10,27 +10,29 @@ export interface ChainedErrorOptions {
 }
 
 export class ChainedError extends Exception {
-  cause: Cause;
+  cause: Error;
 
-  constructor(messageOrCause: Cause, options?: ChainedErrorOptions);
+  constructor(cause: Cause, options?: ChainedErrorOptions);
   constructor(message: string, cause?: Cause, options?: ChainedErrorOptions);
-  constructor(message: string | Cause, cause?: Cause | ChainedErrorOptions, options?: ChainedErrorOptions) {
+  constructor(
+    messageOrCause: string | Cause,
+    causeOrOptions?: Cause | ChainedErrorOptions,
+    options?: ChainedErrorOptions,
+  ) {
     super();
-    let inner: any;
-    if (isErrorLike(cause)) {
-      inner = toError(cause);
-      this.message = message as string;
-    } else if (isErrorLike(message)) {
-      if (typeof message !== 'string') {
-        inner = toError(message);
-      }
-      this.message = typeof message === 'string' ? message : message.message!;
+    let cause: Error;
+    if (isErrorLike(causeOrOptions)) {
+      cause = toError(causeOrOptions);
+      this.message = messageOrCause as string;
+    } else {
+      cause = toError(messageOrCause);
+      this.message = cause.message;
     }
 
-    this.stack = appendToStack(this.stack, cause, options);
+    this.stack = appendToStack(this.stack, causeOrOptions, options);
 
     Object.defineProperty(this, 'cause', {
-      value: inner,
+      value: cause,
       writable: true,
       enumerable: false,
       configurable: true,

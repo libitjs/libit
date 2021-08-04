@@ -23,7 +23,7 @@ describe('chained', function () {
   it('initiate with message and options', function () {
     const chainedError = new ChainedError('Boom', {cleanStack: true});
     expect(chainedError.message).equal('Boom');
-    expect(chainedError.cause).undefined();
+    expect(chainedError.cause.message).equal('Boom');
   });
 
   describe('with single cause', () => {
