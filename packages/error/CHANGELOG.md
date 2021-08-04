@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://gitr.net/mindary/libit/compare/@libit/error@0.3.5...@libit/error@0.3.6) (2021-08-04)
+
+**Note:** Version bump only for package @libit/error
+
+
+
+
+
 ## [0.3.5](https://gitr.net/mindary/libit/compare/@libit/error@0.3.4...@libit/error@0.3.5) (2021-08-04)
 
 **Note:** Version bump only for package @libit/error
